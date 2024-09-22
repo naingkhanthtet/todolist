@@ -1,0 +1,20 @@
+<h1>To do Tasks</h1>
+
+<a href="{% url 'task_create' %}">Add Task </a>
+<ul>
+    {% for task in tasks %}
+    <li>
+        {{task.title}} - {% if task.completed %} Completed {% else %} Incomplete
+        {% endif %}
+        <a href="{% url 'task_update' task.pk %}">Edit</a>
+        <form
+            action="{% url 'task_delete' task.pk %}"
+            method="post"
+            style="display: inline"
+        >
+            {% csrf_token %}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+    {% endfor %}
+</ul>
