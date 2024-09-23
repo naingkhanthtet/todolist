@@ -9,22 +9,19 @@ body {
     background-color: wheat;
 }
 
-.nav--header {
+.nav-header {
     font-size: 3rem;
     text-align: center;
-    /* font-weight: bold; */
-    /* text-shadow: 1px 1px 2px gray; */
 }
 
 .todo-list {
     max-width: 500px;
-    padding: 20px;
+    padding: 0;
     margin: auto;
 }
 
 ul {
     list-style-type: none;
-    padding: 0;
 }
 
 .task-item {
@@ -37,6 +34,17 @@ ul {
 .task-title {
     font-size: 1.5rem;
     text-align: left;
+}
+
+input {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 1.5rem;
+    padding: 0;
+    text-align: left;
+    /* font-family: "Courier New", Courier, monospace; */
+    font-family: "Lora", serif;
 }
 
 .check-icon {

@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { FaPlusCircle } from "react-icons/fa";
-import { FaRegCircle, FaRegCircleCheck } from "react-icons/fa6";
+import { FaPlus, FaRegCircle, FaRegCircleCheck } from "react-icons/fa6";
 
 export default function ToDoPage() {
     const [tasks, setTasks] = useState([]);
     const [newTaskTitle, setNewTaskTitle] = useState("");
-    const [editingTaskId, setEditingTaskId] = useState(null);
-    const [editingTitle, setEditingTitle] = useState("");
     const [clickedDeleteId, setClickedDeleteId] = useState(null);
     const [deleteTimeoutId, setDeleteTimeoutId] = useState(null);
 
@@ -31,27 +28,28 @@ export default function ToDoPage() {
             .catch((err) => console.error("Error creating task:", err));
     };
 
-    const handleEditClick = (task) => {
-        setEditingTaskId(task.id);
-        setEditingTitle(task.title);
+    const handleTitleChange = (event, task) => {
+        const updatedTitle = event.target.value;
+        const updatedTask = { ...task, title: updatedTitle };
+        setTasks(tasks.map((t) => (t.id === task.id ? updatedTask : t)));
     };
 
     const handleKeyPress = (event, task) => {
         if (event.key === "Enter") {
-            axios
-                .put(`/tasks/${task.id}/`, {
-                    title: editingTitle,
-                    completed: task.completed,
-                })
-                .then((res) => {
-                    const updatedTask = tasks.map((t) =>
-                        t.id === task.id ? res.data : t
-                    );
-                    setTasks(updatedTask);
-                    setEditingTaskId(null);
-                })
-                .catch((err) => console.error("Error updating task:", err));
+            updateTask(task);
         }
+    };
+
+    const updateTask = (task) => {
+        axios
+            .put(`/tasks/${task.id}/`, {
+                title: task.title,
+                completed: task.completed,
+            })
+            .then((res) => {
+                setTasks(tasks.map((t) => (t.id === task.id ? res.data : t)));
+            })
+            .catch((err) => console.error("Error updating task:", err));
     };
 
     const deleteTask = (id) => {
@@ -67,6 +65,7 @@ export default function ToDoPage() {
                     .then(() => {
                         setTasks(tasks.filter((task) => task.id !== id));
                         setClickedDeleteId(null);
+                        setDeleteTimeoutId(null);
                     })
                     .catch((err) => console.error("Error deleting task:", err));
             }, 2000);
@@ -76,41 +75,33 @@ export default function ToDoPage() {
 
     return (
         <div className="todo-list">
-            <ul>
-                {tasks.map((task) => (
-                    <li key={task.id} className="task-item">
-                        {/* Task title */}
-                        <span className="task-title">
-                            {editingTaskId === task.id ? (
-                                <input
-                                    type="text"
-                                    value={editingTitle}
-                                    onChange={(e) =>
-                                        setEditingTitle(e.target.value)
-                                    }
-                                    onKeyDown={(e) => handleKeyPress(e, task)}
-                                />
-                            ) : (
-                                <span onClick={() => handleEditClick(task)}>
-                                    {task.title}
-                                </span>
-                            )}
-                        </span>
+            {tasks.map((task) => (
+                <span key={task.id} className="task-item">
+                    {/* Task title */}
+                    {/* <span className="task-title"> */}
+                    <input
+                        className="task-title"
+                        type="text"
+                        value={task.title}
+                        onChange={(e) => handleTitleChange(e, task)}
+                        onKeyDown={(e) => handleKeyPress(e, task)}
+                        onBlur={() => updateTask(task)}
+                    />
+                    {/* </span> */}
 
-                        {/* Delete button */}
-                        <span
-                            className="complete-icon"
-                            onClick={() => deleteTask(task.id)}
-                        >
-                            {clickedDeleteId === task.id ? (
-                                <FaRegCircleCheck />
-                            ) : (
-                                <FaRegCircle />
-                            )}
-                        </span>
-                    </li>
-                ))}
-            </ul>
+                    {/* Delete button */}
+                    <span
+                        className="complete-icon"
+                        onClick={() => deleteTask(task.id)}
+                    >
+                        {clickedDeleteId === task.id ? (
+                            <FaRegCircleCheck />
+                        ) : (
+                            <FaRegCircle />
+                        )}
+                    </span>
+                </span>
+            ))}
 
             <input
                 type="text"
@@ -119,7 +110,7 @@ export default function ToDoPage() {
                 placeholder="Add new task"
             />
             {/* <button onClick={addTask}>Add task</button> */}
-            <FaPlusCircle className="add-icon" onClick={addTask} />
+            <FaPlus className="add-icon" onClick={addTask} />
         </div>
     );
 }
