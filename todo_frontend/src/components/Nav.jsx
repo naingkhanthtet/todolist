@@ -1,13 +1,17 @@
 import React from "react";
 import "../App.css";
-import { FaCheck } from "react-icons/fa6";
+import { IoMenuSharp } from "react-icons/io5";
 
 export default function Nav() {
     return (
         <nav>
-            <p className="nav-header">
-                To Do List <FaCheck className="nav-logo" />
-            </p>
+            <div className="nav-header">
+                <p className="nav-text">To Do List</p>
+
+                <div className="nav-menu">
+                    <IoMenuSharp />
+                </div>
+            </div>
         </nav>
     );
 }

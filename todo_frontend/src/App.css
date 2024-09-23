@@ -1,10 +1,8 @@
 body {
     font-family: "Lora", serif;
     font-style: normal;
-    /* background-image: linear-gradient(to right, #343434, #616161); */
     margin: 0;
     padding: 0;
-    min-height: 100v;
     background-color: wheat;
 }
 
@@ -37,15 +35,29 @@ nav {
 }
 
 .nav-header {
-    font-size: 3rem;
-    text-align: left;
+    display: grid;
+    grid-template-columns: auto 50px;
     padding: 10px;
 }
 
-.nav-logo {
+.nav-text {
+    grid-column: 1;
+    font-size: 3rem;
+    text-align: left;
+}
+
+.nav-menu {
+    font-size: 3rem;
+    grid-column: 2;
+    display: flex;
+    padding: 10px;
+    align-self: center;
+    justify-content: center;
+    cursor: pointer;
     vertical-align: middle;
 }
 
+/* TO DO LIST */
 .todo-list {
     max-width: 500px;
     padding: 0;
@@ -60,22 +72,9 @@ nav {
     border-color: black;
 }
 
-.new-task {
-    display: grid;
-    grid-template-columns: auto 50px;
-    padding: 10px;
-    /* border-bottom: 1px solid black; */
-}
-
 .task-title {
     font-size: 1.5rem;
     text-align: left;
-}
-
-.new-title {
-    font-size: 1.5rem;
-    text-align: left;
-    color: #999999;
 }
 
 input {
@@ -88,26 +87,39 @@ input {
     font-family: "Lora", serif;
 }
 
-.check-icon {
-    display: flex;
-    grid-column: 2;
-    align-self: center;
-}
-
 .complete-icon {
     display: flex;
     grid-column: 2;
     align-self: center;
     font-size: 1.5rem;
-    padding: 5px 10px;
+    padding: 10px;
     cursor: pointer;
     vertical-align: middle;
+    justify-content: center;
 }
 
+/* ADD Task */
+
 .add-icon {
+    display: flex;
+    grid-column: 2;
+    align-self: center;
     font-size: 1.5rem;
-    padding: 5px 10px;
+    padding: 10px;
     cursor: pointer;
     vertical-align: middle;
+    justify-content: center;
     color: #009100;
+}
+
+.new-task {
+    display: grid;
+    grid-template-columns: auto 50px;
+    padding: 10px;
+}
+
+.new-title {
+    font-size: 1.5rem;
+    text-align: left;
+    color: #999999;
 }

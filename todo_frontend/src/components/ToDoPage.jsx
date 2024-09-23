@@ -28,12 +28,6 @@ export default function ToDoPage() {
             .catch((err) => console.error("Error creating task:", err));
     };
 
-    const handleAddTask = (event) => {
-        if (event.key === "Enter") {
-            addTask();
-        }
-    };
-
     const handleTitleChange = (event, task) => {
         const updatedTitle = event.target.value;
         const updatedTask = { ...task, title: updatedTitle };
@@ -126,7 +120,7 @@ export default function ToDoPage() {
                     type="text"
                     value={newTaskTitle}
                     onChange={(e) => setNewTaskTitle(e.target.value)}
-                    onKeyDown={(e) => handleAddTask(e, newTaskTitle)}
+                    onKeyDown={(e) => e.key === "Enter" && addTask()}
                     placeholder="Add new task"
                 />
                 {/* Add button */}
