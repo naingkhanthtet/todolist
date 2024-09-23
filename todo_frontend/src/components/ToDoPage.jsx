@@ -5,8 +5,8 @@ import { FaPlus, FaRegCircle, FaRegCircleCheck } from "react-icons/fa6";
 export default function ToDoPage() {
     const [tasks, setTasks] = useState([]);
     const [newTaskTitle, setNewTaskTitle] = useState("");
-    const [clickedDeleteId, setClickedDeleteId] = useState(null);
-    const [deleteTimeoutId, setDeleteTimeoutId] = useState(null);
+    const [clickedDeleteIds, setClickedDeleteIds] = useState([]);
+    const [deleteTimeoutIds, setDeleteTimeoutIds] = useState({});
 
     useEffect(() => {
         axios
@@ -26,6 +26,12 @@ export default function ToDoPage() {
                 setNewTaskTitle("");
             })
             .catch((err) => console.error("Error creating task:", err));
+    };
+
+    const handleAddTask = (event) => {
+        if (event.key === "Enter") {
+            addTask();
+        }
     };
 
     const handleTitleChange = (event, task) => {
@@ -53,32 +59,43 @@ export default function ToDoPage() {
     };
 
     const deleteTask = (id) => {
-        if (clickedDeleteId === id) {
-            clearTimeout(deleteTimeoutId);
-            setClickedDeleteId(null);
-            setDeleteTimeoutId(null);
+        if (clickedDeleteIds.includes(id)) {
+            clearTimeout(deleteTimeoutIds[id]);
+            setClickedDeleteIds(
+                clickedDeleteIds.filter((deletedId) => deletedId !== id)
+            );
+            setDeleteTimeoutIds((prev) => {
+                const updatedTimeouts = { ...prev };
+                delete updatedTimeouts[id];
+                return updatedTimeouts;
+            });
         } else {
-            setClickedDeleteId(id);
+            setClickedDeleteIds([...clickedDeleteIds, id]);
             const timeoutId = setTimeout(() => {
                 axios
                     .delete(`/tasks/${id}/`)
                     .then(() => {
                         setTasks(tasks.filter((task) => task.id !== id));
-                        setClickedDeleteId(null);
-                        setDeleteTimeoutId(null);
+                        setClickedDeleteIds((prev) =>
+                            prev.filter((deletedId) => deletedId !== id)
+                        );
+                        setDeleteTimeoutIds((prev) => {
+                            const updatedTimeouts = { ...prev };
+                            delete updatedTimeouts[id];
+                            return updatedTimeouts;
+                        });
                     })
                     .catch((err) => console.error("Error deleting task:", err));
             }, 2000);
-            setDeleteTimeoutId(timeoutId);
+            setDeleteTimeoutIds((prev) => ({ ...prev, [id]: timeoutId }));
         }
     };
 
     return (
         <div className="todo-list">
             {tasks.map((task) => (
-                <span key={task.id} className="task-item">
+                <span className="task-item" key={task.id}>
                     {/* Task title */}
-                    {/* <span className="task-title"> */}
                     <input
                         className="task-title"
                         type="text"
@@ -87,14 +104,13 @@ export default function ToDoPage() {
                         onKeyDown={(e) => handleKeyPress(e, task)}
                         onBlur={() => updateTask(task)}
                     />
-                    {/* </span> */}
 
                     {/* Delete button */}
                     <span
                         className="complete-icon"
                         onClick={() => deleteTask(task.id)}
                     >
-                        {clickedDeleteId === task.id ? (
+                        {clickedDeleteIds.includes(task.id) ? (
                             <FaRegCircleCheck />
                         ) : (
                             <FaRegCircle />
@@ -103,14 +119,19 @@ export default function ToDoPage() {
                 </span>
             ))}
 
-            <input
-                type="text"
-                value={newTaskTitle}
-                onChange={(e) => setNewTaskTitle(e.target.value)}
-                placeholder="Add new task"
-            />
-            {/* <button onClick={addTask}>Add task</button> */}
-            <FaPlus className="add-icon" onClick={addTask} />
+            <span className="new-task">
+                {/* New Task input */}
+                <input
+                    className="new-title"
+                    type="text"
+                    value={newTaskTitle}
+                    onChange={(e) => setNewTaskTitle(e.target.value)}
+                    onKeyDown={(e) => handleAddTask(e, newTaskTitle)}
+                    placeholder="Add new task"
+                />
+                {/* Add button */}
+                <FaPlus className="add-icon" onClick={addTask} />
+            </span>
         </div>
     );
 }

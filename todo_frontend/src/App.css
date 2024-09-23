@@ -5,13 +5,45 @@ body {
     margin: 0;
     padding: 0;
     min-height: 100v;
-    color: black;
     background-color: wheat;
+}
+
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #181818;
+        color: wheat;
+    }
+
+    .todo-list {
+        color: wheat;
+    }
+
+    .task-title {
+        color: wheat;
+    }
+
+    .add-icon {
+        color: #01c001;
+    }
+
+    .task-item {
+        border-color: wheat;
+    }
+}
+
+nav {
+    max-width: 500px;
+    margin: auto;
 }
 
 .nav-header {
     font-size: 3rem;
-    text-align: center;
+    text-align: left;
+    padding: 10px;
+}
+
+.nav-logo {
+    vertical-align: middle;
 }
 
 .todo-list {
@@ -20,20 +52,30 @@ body {
     margin: auto;
 }
 
-ul {
-    list-style-type: none;
-}
-
 .task-item {
     display: grid;
     grid-template-columns: auto 50px;
     padding: 10px;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid;
+    border-color: black;
+}
+
+.new-task {
+    display: grid;
+    grid-template-columns: auto 50px;
+    padding: 10px;
+    /* border-bottom: 1px solid black; */
 }
 
 .task-title {
     font-size: 1.5rem;
     text-align: left;
+}
+
+.new-title {
+    font-size: 1.5rem;
+    text-align: left;
+    color: #999999;
 }
 
 input {
@@ -43,7 +85,6 @@ input {
     font-size: 1.5rem;
     padding: 0;
     text-align: left;
-    /* font-family: "Courier New", Courier, monospace; */
     font-family: "Lora", serif;
 }
 
@@ -63,22 +104,10 @@ input {
     vertical-align: middle;
 }
 
-/* .edit-icon,
-.check-icon {
-    font-size: 1.5rem;
-    padding: 5px 10px;
-    cursor: pointer;
-    vertical-align: middle;
-} */
-
-.trash-icon:hover {
-    color: #b40000;
-}
-
 .add-icon {
     font-size: 1.5rem;
     padding: 5px 10px;
     cursor: pointer;
     vertical-align: middle;
-    color: green;
+    color: #009100;
 }
