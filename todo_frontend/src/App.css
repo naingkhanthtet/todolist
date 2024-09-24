@@ -5,7 +5,7 @@ body {
     padding: 0;
     background-color: wheat;
 }
-
+/*
 @media (prefers-color-scheme: dark) {
     body {
         background-color: #181818;
@@ -28,6 +28,7 @@ body {
         border-color: wheat;
     }
 }
+    */
 
 nav {
     max-width: 500px;

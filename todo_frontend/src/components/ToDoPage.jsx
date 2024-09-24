@@ -5,24 +5,17 @@ import { FaPlus, FaRegCircle, FaRegCircleCheck } from "react-icons/fa6";
 export default function ToDoPage() {
     const [tasks, setTasks] = useState([]);
     const [newTaskTitle, setNewTaskTitle] = useState("");
-    const [taskEdits, setTaskEdits] = useState({});
+    const [taskEdits, setTaskEdits] = useState(() => {
+        return JSON.parse(localStorage.getItem("taskEdits")) || {};
+    });
     const [clickedDeleteIds, setClickedDeleteIds] = useState([]);
     const [deleteTimeoutIds, setDeleteTimeoutIds] = useState({});
 
     useEffect(() => {
-        const storedEdits = JSON.parse(localStorage.getItem("taskEdits")) || {};
         axios
             .get("/tasks/")
             .then((res) => {
-                const fetchedTasks = res.data;
-                const mergedTasks = fetchedTasks.map((task) => {
-                    if (storedEdits[task.id]) {
-                        return { ...task, title: storedEdits[task.id] };
-                    }
-                    return task;
-                });
-
-                setTasks(mergedTasks);
+                setTasks(res.data);
             })
             .catch((err) => console.error("Error fetching tasks:", err));
     }, []);
@@ -41,12 +34,6 @@ export default function ToDoPage() {
             })
             .catch((err) => console.error("Error creating task:", err));
     };
-
-    // const handleTitleChange = (event, task) => {
-    //     const updatedTitle = event.target.value;
-    //     const updatedTask = { ...task, title: updatedTitle };
-    //     setTasks(tasks.map((t) => (t.id === task.id ? updatedTask : t)));
-    // };
 
     const handleTaskEdits = (event, taskId) => {
         const editedTaskTitle = event.target.value;
@@ -87,7 +74,9 @@ export default function ToDoPage() {
                 axios
                     .delete(`/tasks/${id}/`)
                     .then(() => {
-                        setTasks(tasks.filter((task) => task.id !== id));
+                        setTasks((prevTasks) =>
+                            prevTasks.filter((task) => task.id !== id)
+                        );
                         setClickedDeleteIds((prev) =>
                             prev.filter((deletedId) => deletedId !== id)
                         );
