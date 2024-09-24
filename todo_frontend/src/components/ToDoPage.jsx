@@ -5,17 +5,31 @@ import { FaPlus, FaRegCircle, FaRegCircleCheck } from "react-icons/fa6";
 export default function ToDoPage() {
     const [tasks, setTasks] = useState([]);
     const [newTaskTitle, setNewTaskTitle] = useState("");
+    const [taskEdits, setTaskEdits] = useState({});
     const [clickedDeleteIds, setClickedDeleteIds] = useState([]);
     const [deleteTimeoutIds, setDeleteTimeoutIds] = useState({});
 
     useEffect(() => {
+        const storedEdits = JSON.parse(localStorage.getItem("taskEdits")) || {};
         axios
             .get("/tasks/")
             .then((res) => {
-                setTasks(res.data);
+                const fetchedTasks = res.data;
+                const mergedTasks = fetchedTasks.map((task) => {
+                    if (storedEdits[task.id]) {
+                        return { ...task, title: storedEdits[task.id] };
+                    }
+                    return task;
+                });
+
+                setTasks(mergedTasks);
             })
             .catch((err) => console.error("Error fetching tasks:", err));
     }, []);
+
+    useEffect(() => {
+        localStorage.setItem("taskEdits", JSON.stringify(taskEdits));
+    }, [taskEdits]);
 
     const addTask = () => {
         if (newTaskTitle.trim() === "") return;
@@ -28,26 +42,30 @@ export default function ToDoPage() {
             .catch((err) => console.error("Error creating task:", err));
     };
 
-    const handleTitleChange = (event, task) => {
-        const updatedTitle = event.target.value;
-        const updatedTask = { ...task, title: updatedTitle };
-        setTasks(tasks.map((t) => (t.id === task.id ? updatedTask : t)));
-    };
+    // const handleTitleChange = (event, task) => {
+    //     const updatedTitle = event.target.value;
+    //     const updatedTask = { ...task, title: updatedTitle };
+    //     setTasks(tasks.map((t) => (t.id === task.id ? updatedTask : t)));
+    // };
 
-    const handleKeyPress = (event, task) => {
-        if (event.key === "Enter") {
-            updateTask(task);
-        }
+    const handleTaskEdits = (event, taskId) => {
+        const editedTaskTitle = event.target.value;
+        setTaskEdits({ ...taskEdits, [taskId]: editedTaskTitle });
     };
 
     const updateTask = (task) => {
+        const editedTaskTitle = taskEdits[task.id] || task.title;
         axios
             .put(`/tasks/${task.id}/`, {
-                title: task.title,
+                title: editedTaskTitle,
                 completed: task.completed,
             })
             .then((res) => {
                 setTasks(tasks.map((t) => (t.id === task.id ? res.data : t)));
+                setTaskEdits((prevEdits) => {
+                    const { [task.id]: _, ...rest } = prevEdits;
+                    return rest;
+                });
             })
             .catch((err) => console.error("Error updating task:", err));
     };
@@ -93,9 +111,9 @@ export default function ToDoPage() {
                     <input
                         className="task-title"
                         type="text"
-                        value={task.title}
-                        onChange={(e) => handleTitleChange(e, task)}
-                        onKeyDown={(e) => handleKeyPress(e, task)}
+                        value={taskEdits[task.id] || task.title}
+                        onChange={(e) => handleTaskEdits(e, task.id)}
+                        onKeyDown={(e) => e.key === "Enter" && updateTask(task)}
                         onBlur={() => updateTask(task)}
                     />
 
