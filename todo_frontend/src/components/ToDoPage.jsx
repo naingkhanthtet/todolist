@@ -20,26 +20,30 @@ export default function ToDoPage() {
             .catch((err) => console.error("Error fetching tasks:", err));
     }, []);
 
+    // store tasks on Local storage when the value changes
     useEffect(() => {
         localStorage.setItem("taskEdits", JSON.stringify(taskEdits));
     }, [taskEdits]);
 
+    // add task to database and set tasks value
     const addTask = () => {
         if (newTaskTitle.trim() === "") return;
         axios
             .post("/tasks/", { title: newTaskTitle, completed: false })
             .then((res) => {
                 setTasks([...tasks, res.data]);
-                setNewTaskTitle("");
+                setNewTaskTitle(""); // reset input form after adding task
             })
             .catch((err) => console.error("Error creating task:", err));
     };
 
-    const handleTaskEdits = (event, taskId) => {
+    // store edited task
+    const handleTaskEdits = (event, task) => {
         const editedTaskTitle = event.target.value;
-        setTaskEdits({ ...taskEdits, [taskId]: editedTaskTitle });
+        setTaskEdits({ ...taskEdits, [task.id]: editedTaskTitle });
     };
 
+    // send PUT request with updated task
     const updateTask = (task) => {
         const editedTaskTitle = taskEdits[task.id] || task.title;
         axios
@@ -50,6 +54,7 @@ export default function ToDoPage() {
             .then((res) => {
                 setTasks(tasks.map((t) => (t.id === task.id ? res.data : t)));
                 setTaskEdits((prevEdits) => {
+                    // remove the edited task
                     const { [task.id]: _, ...rest } = prevEdits;
                     return rest;
                 });
@@ -100,8 +105,8 @@ export default function ToDoPage() {
                     <input
                         className="task-title"
                         type="text"
-                        value={taskEdits[task.id] || task.title}
-                        onChange={(e) => handleTaskEdits(e, task.id)}
+                        value={taskEdits[task.id] || task.title} // title from localstorage or from backend
+                        onChange={(e) => handleTaskEdits(e, task)}
                         onKeyDown={(e) => e.key === "Enter" && updateTask(task)}
                         onBlur={() => updateTask(task)}
                     />

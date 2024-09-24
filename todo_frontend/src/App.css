@@ -29,10 +29,46 @@ body {
     }
 }
     */
+.register-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 15px;
+    max-width: 500px;
+    margin: auto;
+}
+
+.register-header {
+    font-size: 3rem;
+    text-align: left;
+}
+
+.register-username,
+.register-email,
+.register-password {
+    padding: 10px;
+    border-bottom: 1px solid;
+    border-color: black;
+}
+
+button {
+    border: none;
+    background-color: transparent;
+    outline: none;
+    font-size: 1.5rem;
+    padding: 10px;
+    font-family: "Lora", serif;
+    margin-top: 20px;
+}
+
+button:hover {
+    border: 1px solid black;
+}
 
 nav {
     max-width: 500px;
     margin: auto;
+    padding: 0 15px;
 }
 
 .nav-header {
@@ -63,6 +99,7 @@ nav {
     max-width: 500px;
     padding: 0;
     margin: auto;
+    padding: 0 15px;
 }
 
 .task-item {
