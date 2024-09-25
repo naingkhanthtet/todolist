@@ -4,12 +4,10 @@ from rest_framework.generics import (
     RetrieveUpdateAPIView,
     DestroyAPIView,
 )
-from rest_framework import permissions
+from rest_framework.permissions import IsAuthenticated
 from .models import Task
 from .forms import TaskForm
 from .serializers import TaskSerializer
-
-# from django.views.generic import View, ListView, CreateView, UpdateView, DeleteView
 
 
 def index(request):
@@ -17,44 +15,21 @@ def index(request):
 
 
 class TaskListCreateView(ListCreateAPIView):
-    queryset = Task.objects.all()
+    # queryset = Task.objects.all()
     serializer_class = TaskSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Task.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
 
 class TaskRUDView(RetrieveUpdateAPIView, DestroyAPIView):
-    queryset = Task.objects.all()
+    # queryset = Task.objects.all()
     serializer_class = TaskSerializer
+    permission_classes = [IsAuthenticated]
 
-
-# class TaskListView(ListView):
-#     model = Task
-#     queryset = Task.objects.all()
-#     context_object_name = "tasks"
-#     template_name = "task_list.html"
-
-# class TaskCreateView(CreateView):
-#     model = Task
-#     form_class = TaskForm
-#     template_name = "task_form.html"
-#     success_url = reverse_lazy("task_list")
-
-
-# class TaskUpdateView(UpdateView):
-#     model = Task
-#     form_class = TaskForm
-#     template_name = "task_form.html"
-#     success_url = reverse_lazy("task_list")
-
-
-# class TaskDeleteView(DeleteView):
-#     model = Task
-#     template_name = "task_confirm_delete.html"
-#     success_url = reverse_lazy("task_list")
-
-# class RegisterView(APIView):
-#     def post(self, request):
-#         serializer = UserRegistrationSerializer(data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def get_queryset(self):
+        return Task.objects.filter(user=self.request.user)
