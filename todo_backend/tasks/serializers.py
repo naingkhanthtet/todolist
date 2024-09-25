@@ -1,8 +1,9 @@
-from rest_framework import serializers
 from .models import Task
+from django.contrib.auth.models import User
+from rest_framework.serializers import ModelSerializer
 
 
-class TaskSerializer(serializers.ModelSerializer):
+class TaskSerializer(ModelSerializer):
     class Meta:
         model = Task
         fields = ["id", "title", "completed"]

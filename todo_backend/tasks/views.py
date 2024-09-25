@@ -4,6 +4,7 @@ from rest_framework.generics import (
     RetrieveUpdateAPIView,
     DestroyAPIView,
 )
+from rest_framework import permissions
 from .models import Task
 from .forms import TaskForm
 from .serializers import TaskSerializer
@@ -49,3 +50,11 @@ class TaskRUDView(RetrieveUpdateAPIView, DestroyAPIView):
 #     model = Task
 #     template_name = "task_confirm_delete.html"
 #     success_url = reverse_lazy("task_list")
+
+# class RegisterView(APIView):
+#     def post(self, request):
+#         serializer = UserRegistrationSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

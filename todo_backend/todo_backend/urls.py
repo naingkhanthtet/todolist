@@ -23,4 +23,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("tasks/", include("tasks.urls")),
     path("", index, name="index"),
+    # path("auth/", include("users.urls")),
+    path("auth/", include("djoser.urls")),
+    path("auth/", include("djoser.urls.authtoken")),
 ]
