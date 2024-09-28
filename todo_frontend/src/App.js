@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import Register from "./components/Register";
 import Login from "./components/Login";
+import Logout from "./components/Logout";
 import { useEffect, useState } from "react";
 
 function App() {
@@ -44,7 +45,13 @@ function App() {
                                 token ? <ToDoPage /> : <Navigate to="/login" />
                             }
                         />
-                        <Route path="*" element={<Navigate to="/login" />} />
+                        <Route
+                            path="*"
+                            element={
+                                token ? <ToDoPage /> : <Navigate to="/login" />
+                            }
+                        />
+                        <Route path="/logout" element={<Logout />} />
                     </Routes>
                 </div>
             </Router>

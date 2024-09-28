@@ -21,12 +21,9 @@ from tasks.views import index, LogOutView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
+    path("", index, name="index"),
     path("admin/", admin.site.urls),
     path("tasks/", include("tasks.urls")),
-    path("", index, name="index"),
-    # path("auth/", include("users.urls")),
-    # path("auth/", include("djoser.urls")),
-    # path("auth/", include("djoser.urls.authtoken")),
     path("token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("logout/", LogOutView.as_view(), name="logout"),
