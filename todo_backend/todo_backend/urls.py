@@ -24,6 +24,8 @@ urlpatterns = [
     path("", index, name="index"),
     path("admin/", admin.site.urls),
     path("tasks/", include("tasks.urls")),
+    path("auth/", include("djoser.urls")),
+    path("auth/", include("djoser.urls.authtoken")),
     path("token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("logout/", LogOutView.as_view(), name="logout"),
