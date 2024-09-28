@@ -35,7 +35,7 @@ const ToDoPage = () => {
                 }
             })();
         }
-    }, []);
+    }, [navigate]);
 
     // store tasks on Local storage when the value changes
     useEffect(() => {

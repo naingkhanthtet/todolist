@@ -24,19 +24,6 @@ class HomeView(APIView):
         return Response(content)
 
 
-class LogOutView(APIView):
-    permission_classes = (IsAuthenticated,)
-
-    def post(self, request):
-        try:
-            refresh_token = request.user["refresh_token"]
-            token = RefreshToken(refresh_token)
-            token.blacklist()
-            return Response(status=status.HTTP_205_RESET_CONTENT)
-        except Exception as e:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
-
-
 def index(request):
     return render(request, "index.html", {})
 
@@ -60,3 +47,16 @@ class TaskRUDView(RetrieveUpdateAPIView, DestroyAPIView):
 
     def get_queryset(self):
         return Task.objects.filter(user=self.request.user)
+
+
+class LogOutView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        try:
+            refresh_token = request.user["refresh_token"]
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+            return Response(status=status.HTTP_205_RESET_CONTENT)
+        except Exception as e:
+            return Response(status=status.HTTP_400_BAD_REQUEST)

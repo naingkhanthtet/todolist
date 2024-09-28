@@ -17,7 +17,7 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from tasks.views import index
+from tasks.views import index, LogOutView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
@@ -29,4 +29,5 @@ urlpatterns = [
     # path("auth/", include("djoser.urls.authtoken")),
     path("token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    path("logout/", LogOutView.as_view(), name="logout"),
 ]
