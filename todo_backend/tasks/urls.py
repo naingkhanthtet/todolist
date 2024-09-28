@@ -1,5 +1,7 @@
 from django.urls import path
-from .views import index, TaskListCreateView, TaskRUDView
+
+from .views import index, TaskListCreateView, TaskRUDView, HomeView
+from .views import index, HomeView, LogOutView
 
 # app_name = "tasks"
 urlpatterns = [
@@ -9,4 +11,6 @@ urlpatterns = [
     path("", TaskListCreateView.as_view(), name="task-list-create"),
     path("<int:pk>/", TaskRUDView.as_view(), name="task-rud"),
     path("index/", index, name="index"),
+    path("home/", HomeView.as_view(), name="home"),
+    path("logout/", LogOutView.as_view(), name="logout"),
 ]

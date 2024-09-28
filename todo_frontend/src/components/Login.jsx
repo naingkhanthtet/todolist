@@ -2,12 +2,10 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const Register = ({ setToken }) => {
+const Login = ({ setToken }) => {
     const [formData, setFormData] = useState({
         username: "",
-        email: "",
         password: "",
-        re_password: "",
     });
     const navigate = useNavigate();
 
@@ -15,22 +13,46 @@ const Register = ({ setToken }) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        axios
-            .post(`/auth/users/`, formData)
-            .then((res) => {
-                setToken(res.data.token);
-                alert("Registration is successful");
-                navigate("/home");
-            })
-            .catch((err) => console.error("Registration failed", err));
+        // axios
+        //     .post(`/auth/token/login/`, formData)
+        //     .then((res) => {
+        //         if (res.data.auth_token) {
+        //             setToken(res.data.auth_token);
+        //             navigate("/home");
+        //         } else {
+        //             console.error("Token not found in response.");
+        //         }
+        //     })
+        //     .catch((err) => console.error("Registration failed", err));
+        try {
+            const { data } = await axios.post(`/token/`, formData, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                withCredentials: true,
+            });
+
+            localStorage.clear();
+            localStorage.setItem("access_token", data.access);
+            localStorage.setItem("refresh_token", data.refresh);
+            setToken(data.access);
+
+            axios.defaults.headers.common[
+                "Authorization"
+            ] = `Bearer ${data["access"]}`;
+            navigate("/home");
+        } catch (err) {
+            console.error("login error", err);
+            alert("Login failed");
+        }
     };
 
     return (
         <div className="register-page">
             <div className="register-contents">
-                <p className="register-header">Create fake account</p>
+                <p className="register-header">Login</p>
                 <form onSubmit={handleSubmit} className="register-form">
                     <input
                         type="text"
@@ -41,14 +63,6 @@ const Register = ({ setToken }) => {
                         required
                     />
                     <input
-                        type="email"
-                        name="email"
-                        onChange={handleChange}
-                        placeholder="Your fake email"
-                        className="register-email"
-                        required
-                    />
-                    <input
                         type="password"
                         name="password"
                         onChange={handleChange}
@@ -56,15 +70,6 @@ const Register = ({ setToken }) => {
                         className="register-password"
                         required
                     />
-                    <input
-                        type="password"
-                        name="re_password"
-                        onChange={handleChange}
-                        placeholder="Retype your secure password"
-                        className="register-repassword"
-                        required
-                    />
-                    <br />
                     <button type="submit" className="register-submit">
                         Submit
                     </button>
@@ -74,4 +79,4 @@ const Register = ({ setToken }) => {
     );
 };
 
-export default Register;
+export default Login;

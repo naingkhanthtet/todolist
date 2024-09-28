@@ -30,22 +30,23 @@ body {
 }
     */
 .register-page {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 15px;
     max-width: 500px;
     margin: auto;
 }
 
+.register-contents {
+    padding: 0 15px;
+}
+
 .register-header {
-    font-size: 3rem;
+    font-size: 1.5rem;
     text-align: left;
 }
 
 .register-username,
 .register-email,
-.register-password {
+.register-password,
+.register-repassword {
     padding: 10px;
     border-bottom: 1px solid;
     border-color: black;
@@ -63,6 +64,11 @@ button {
 
 button:hover {
     border: 1px solid black;
+}
+
+button:focus {
+    background-color: black;
+    color: wheat;
 }
 
 nav {

@@ -4,10 +4,37 @@ from rest_framework.generics import (
     RetrieveUpdateAPIView,
     DestroyAPIView,
 )
-from rest_framework.permissions import IsAuthenticated
 from .models import Task
 from .forms import TaskForm
 from .serializers import TaskSerializer
+
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework import status
+
+
+class HomeView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        print(request.user)
+        content = {"message": "Success request"}
+        return Response(content)
+
+
+class LogOutView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        try:
+            refresh_token = request.user["refresh_token"]
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+            return Response(status=status.HTTP_205_RESET_CONTENT)
+        except Exception as e:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 def index(request):
