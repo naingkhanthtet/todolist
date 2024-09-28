@@ -30,7 +30,6 @@ const Register = ({ setToken }) => {
     return (
         <div className="register-page">
             <div className="register-contents">
-                <p className="register-header">Create fake account</p>
                 <form onSubmit={handleSubmit} className="register-form">
                     <input
                         type="text"

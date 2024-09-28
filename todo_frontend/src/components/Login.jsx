@@ -15,17 +15,6 @@ const Login = ({ setToken }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // axios
-        //     .post(`/auth/token/login/`, formData)
-        //     .then((res) => {
-        //         if (res.data.auth_token) {
-        //             setToken(res.data.auth_token);
-        //             navigate("/home");
-        //         } else {
-        //             console.error("Token not found in response.");
-        //         }
-        //     })
-        //     .catch((err) => console.error("Registration failed", err));
         try {
             const { data } = await axios.post(`/token/`, formData, {
                 headers: {
@@ -52,7 +41,6 @@ const Login = ({ setToken }) => {
     return (
         <div className="register-page">
             <div className="register-contents">
-                <p className="register-header">Login</p>
                 <form onSubmit={handleSubmit} className="register-form">
                     <input
                         type="text"
