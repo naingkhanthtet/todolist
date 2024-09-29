@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../App.css";
+import "./styles/Nav.css";
 import { IoMenuSharp } from "react-icons/io5";
 import { useLocation } from "react-router-dom";
 import Logout from "./Logout";
+// import Theme from "./Theme";
 
 export default function Nav() {
+    const [dropDown, setDropdown] = useState(false);
     const location = useLocation();
     let navTitle = "ToDoList";
 
@@ -17,20 +20,29 @@ export default function Nav() {
     const showMenu =
         location.pathname !== "/register" && location.pathname !== "/login";
 
+    const toggleMenu = () => {
+        setDropdown(!dropDown);
+    };
+
+    useEffect(() => {
+        setDropdown(false);
+    }, [location]);
+
     return (
         <nav>
             <div className="nav-header">
                 <p className="nav-text">{navTitle}</p>
 
                 {showMenu && (
-                    <div className="nav-menu">
-                        <IoMenuSharp />
-                    </div>
-                )}
+                    <div className="nav-menu" onClick={toggleMenu}>
+                        <IoMenuSharp className="nav-menu-icon" />
 
-                {showMenu && (
-                    <div className="nav-menu">
-                        <Logout />
+                        {dropDown && (
+                            <div className="nav-dropdown">
+                                <Logout />
+                                {/* <Theme /> */}
+                            </div>
+                        )}
                     </div>
                 )}
             </div>

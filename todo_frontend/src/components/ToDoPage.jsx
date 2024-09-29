@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "./styles/ToDoPage.css";
 import { useNavigate } from "react-router-dom";
 import { FaPlus, FaRegCircle, FaRegCircleCheck } from "react-icons/fa6";
 
@@ -13,29 +14,28 @@ const ToDoPage = () => {
     const [deleteTimeoutIds, setDeleteTimeoutIds] = useState({});
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (localStorage.getItem("access_token") === null) {
-            navigate("/login");
-        } else {
-            (async () => {
-                try {
-                    const { data } = await axios.get("/tasks/", {
-                        headers: {
-                            "Content-Type": "application/json",
-                            Authorization: `Bearer ${localStorage.getItem(
-                                "access_token"
-                            )}`,
-                        },
-                    });
+    if (localStorage.getItem("access_token") === null) {
+        navigate("/login");
+    }
 
-                    setTasks(data);
-                } catch (err) {
-                    console.error("error fetching", err);
-                    navigate("/login");
-                }
-            })();
-        }
-    }, [navigate]);
+    useEffect(() => {
+        (async () => {
+            try {
+                const { data } = await axios.get("/tasks/", {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${localStorage.getItem(
+                            "access_token"
+                        )}`,
+                    },
+                });
+
+                setTasks(data);
+            } catch (err) {
+                console.error("error fetching", err);
+            }
+        })();
+    }, []);
 
     // store tasks on Local storage when the value changes
     useEffect(() => {
@@ -79,6 +79,7 @@ const ToDoPage = () => {
             .catch((err) => console.error("Error updating task:", err));
     };
 
+    // delete task
     const deleteTask = (id) => {
         if (clickedDeleteIds.includes(id)) {
             clearTimeout(deleteTimeoutIds[id]);

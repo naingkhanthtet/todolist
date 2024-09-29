@@ -3,7 +3,16 @@ body {
     font-style: normal;
     margin: 0;
     padding: 0;
-    background-color: wheat;
+    background-color: #ece2ce;
+}
+
+.light {
+    background-color: white;
+}
+
+.dark {
+    background-color: black;
+    color: white;
 }
 /*
 @media (prefers-color-scheme: dark) {
@@ -29,37 +38,14 @@ body {
     }
 }
     */
-.register-page {
-    max-width: 500px;
-    margin: auto;
-}
-
-.register-contents {
-    padding: 0 15px;
-}
-
-.register-header {
-    font-size: 1.5rem;
-    text-align: left;
-}
-
-.register-username,
-.register-email,
-.register-password,
-.register-repassword {
-    padding: 10px;
-    border-bottom: 1px solid;
-    border-color: black;
-}
 
 button {
     border: none;
     background-color: transparent;
     outline: none;
     font-size: 1.5rem;
-    padding: 10px;
+    padding: 15px;
     font-family: "Lora", serif;
-    margin-top: 20px;
 }
 
 button:hover {
@@ -68,57 +54,7 @@ button:hover {
 
 button:focus {
     background-color: black;
-    color: wheat;
-}
-
-nav {
-    max-width: 500px;
-    margin: auto;
-    padding: 0 15px;
-}
-
-.nav-header {
-    display: grid;
-    grid-template-columns: auto 50px;
-    padding: 10px;
-}
-
-.nav-text {
-    grid-column: 1;
-    font-size: 3rem;
-    text-align: left;
-}
-
-.nav-menu {
-    font-size: 3rem;
-    grid-column: 2;
-    display: flex;
-    padding: 10px;
-    align-self: center;
-    justify-content: center;
-    cursor: pointer;
-    vertical-align: middle;
-}
-
-/* TO DO LIST */
-.todo-list {
-    max-width: 500px;
-    padding: 0;
-    margin: auto;
-    padding: 0 15px;
-}
-
-.task-item {
-    display: grid;
-    grid-template-columns: auto 50px;
-    padding: 10px;
-    border-bottom: 1px solid;
-    border-color: black;
-}
-
-.task-title {
-    font-size: 1.5rem;
-    text-align: left;
+    color: #ece2ce;
 }
 
 input {
@@ -131,39 +67,6 @@ input {
     font-family: "Lora", serif;
 }
 
-.complete-icon {
-    display: flex;
-    grid-column: 2;
-    align-self: center;
-    font-size: 1.5rem;
-    padding: 10px;
-    cursor: pointer;
-    vertical-align: middle;
-    justify-content: center;
-}
-
-/* ADD Task */
-
-.add-icon {
-    display: flex;
-    grid-column: 2;
-    align-self: center;
-    font-size: 1.5rem;
-    padding: 10px;
-    cursor: pointer;
-    vertical-align: middle;
-    justify-content: center;
-    color: #009100;
-}
-
-.new-task {
-    display: grid;
-    grid-template-columns: auto 50px;
-    padding: 10px;
-}
-
-.new-title {
-    font-size: 1.5rem;
-    text-align: left;
-    color: #999999;
+input:focus {
+    background-color: transparent;
 }
