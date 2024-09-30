@@ -6,11 +6,11 @@ body {
     background-color: #ece2ce;
 }
 
-.light {
-    background-color: white;
+body.light {
+    background-color: #ece2ce;
 }
 
-.dark {
+body.dark {
     background-color: black;
     color: white;
 }
@@ -46,6 +46,7 @@ button {
     font-size: 1.5rem;
     padding: 15px;
     font-family: "Lora", serif;
+    border: 1px solid #ece2ce;
 }
 
 button:hover {

@@ -29,6 +29,7 @@ nav {
 }
 
 .nav-dropdown {
+    transition-delay: 1s;
     position: absolute;
     margin: 0;
     padding: 0;

@@ -4,7 +4,7 @@ import "./styles/Nav.css";
 import { IoMenuSharp } from "react-icons/io5";
 import { useLocation } from "react-router-dom";
 import Logout from "./Logout";
-// import Theme from "./Theme";
+import Theme from "./Theme";
 
 export default function Nav() {
     const [dropDown, setDropdown] = useState(false);
@@ -40,7 +40,7 @@ export default function Nav() {
                         {dropDown && (
                             <div className="nav-dropdown">
                                 <Logout />
-                                {/* <Theme /> */}
+                                <Theme />
                             </div>
                         )}
                     </div>
