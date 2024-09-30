@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "./styles/Login.css";
 
 const Login = ({ setToken }) => {
     const [formData, setFormData] = useState({
@@ -39,15 +40,15 @@ const Login = ({ setToken }) => {
     };
 
     return (
-        <div className="register-page">
-            <div className="register-contents">
-                <form onSubmit={handleSubmit} className="register-form">
+        <div className="login-page">
+            <div className="login-contents">
+                <form onSubmit={handleSubmit} className="login-form">
                     <input
                         type="text"
                         name="username"
                         onChange={handleChange}
                         placeholder="Your username"
-                        className="register-username"
+                        className="login-username"
                         required
                     />
                     <input
@@ -55,10 +56,10 @@ const Login = ({ setToken }) => {
                         name="password"
                         onChange={handleChange}
                         placeholder="Your secure password"
-                        className="register-password"
+                        className="login-password"
                         required
                     />
-                    <button type="submit" className="register-submit">
+                    <button type="submit" className="login-submit">
                         Submit
                     </button>
                 </form>

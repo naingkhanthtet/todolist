@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "./styles/ToDoPage.css";
 import { useNavigate } from "react-router-dom";
+import DOMPurify from "dompurify";
 import { FaPlus, FaRegCircle, FaRegCircleCheck } from "react-icons/fa6";
 
 const ToDoPage = () => {
@@ -13,29 +15,28 @@ const ToDoPage = () => {
     const [deleteTimeoutIds, setDeleteTimeoutIds] = useState({});
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (localStorage.getItem("access_token") === null) {
-            navigate("/login");
-        } else {
-            (async () => {
-                try {
-                    const { data } = await axios.get("/tasks/", {
-                        headers: {
-                            "Content-Type": "application/json",
-                            Authorization: `Bearer ${localStorage.getItem(
-                                "access_token"
-                            )}`,
-                        },
-                    });
+    if (localStorage.getItem("access_token") === null) {
+        navigate("/login");
+    }
 
-                    setTasks(data);
-                } catch (err) {
-                    console.error("error fetching", err);
-                    navigate("/login");
-                }
-            })();
-        }
-    }, [navigate]);
+    useEffect(() => {
+        (async () => {
+            try {
+                const { data } = await axios.get("/tasks/", {
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${localStorage.getItem(
+                            "access_token"
+                        )}`,
+                    },
+                });
+                // set tasks if fetch complete
+                setTasks(data);
+            } catch (err) {
+                console.error("error fetching", err);
+            }
+        })();
+    }, []);
 
     // store tasks on Local storage when the value changes
     useEffect(() => {
@@ -44,9 +45,13 @@ const ToDoPage = () => {
 
     // add task to database and set tasks value
     const addTask = () => {
-        if (newTaskTitle.trim() === "") return;
+        const purifiedNewTask = DOMPurify.sanitize(newTaskTitle);
+        if (purifiedNewTask.trim() === "") {
+            alert("Please add valid task title");
+            return;
+        }
         axios
-            .post("/tasks/", { title: newTaskTitle, completed: false })
+            .post("/tasks/", { title: purifiedNewTask, completed: false })
             .then((res) => {
                 setTasks([...tasks, res.data]);
                 setNewTaskTitle(""); // reset input form after adding task
@@ -79,6 +84,7 @@ const ToDoPage = () => {
             .catch((err) => console.error("Error updating task:", err));
     };
 
+    // delete task
     const deleteTask = (id) => {
         if (clickedDeleteIds.includes(id)) {
             clearTimeout(deleteTimeoutIds[id]);
@@ -116,31 +122,39 @@ const ToDoPage = () => {
 
     return (
         <div className="todo-list">
-            {tasks.map((task) => (
-                <span className="task-item" key={task.id}>
-                    {/* Task title */}
-                    <input
-                        className="task-title"
-                        type="text"
-                        value={taskEdits[task.id] || task.title} // title from localstorage or from backend
-                        onChange={(e) => handleTaskEdits(e, task)}
-                        onKeyDown={(e) => e.key === "Enter" && updateTask(task)}
-                        onBlur={() => updateTask(task)}
-                    />
+            {tasks && tasks.length > 0 ? (
+                tasks.map((task) => (
+                    <span className="task-item" key={task.id}>
+                        {/* Task title */}
+                        <input
+                            className="task-title"
+                            type="text"
+                            value={taskEdits[task.id] || task.title} // title from localstorage or from backend
+                            onChange={(e) => handleTaskEdits(e, task)}
+                            onKeyDown={(e) =>
+                                e.key === "Enter" && updateTask(task)
+                            }
+                            onBlur={() => updateTask(task)}
+                        />
 
-                    {/* Delete button */}
-                    <span
-                        className="complete-icon"
-                        onClick={() => deleteTask(task.id)}
-                    >
-                        {clickedDeleteIds.includes(task.id) ? (
-                            <FaRegCircleCheck />
-                        ) : (
-                            <FaRegCircle />
-                        )}
+                        {/* Delete button */}
+                        <span
+                            className="complete-icon"
+                            onClick={() => deleteTask(task.id)}
+                        >
+                            {clickedDeleteIds.includes(task.id) ? (
+                                <FaRegCircleCheck />
+                            ) : (
+                                <FaRegCircle />
+                            )}
+                        </span>
                     </span>
-                </span>
-            ))}
+                ))
+            ) : (
+                <p className="error-task">
+                    Error loading tasks, try refreshing the browser{" "}
+                </p>
+            )}
 
             <span className="new-task">
                 {/* New Task input */}

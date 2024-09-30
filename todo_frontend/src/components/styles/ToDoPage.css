@@ -1,0 +1,65 @@
+/* TO DO LIST */
+.todo-list {
+    max-width: 500px;
+    padding: 0;
+    margin: auto;
+    padding: 0 15px;
+}
+
+.task-item {
+    display: grid;
+    grid-template-columns: auto 50px;
+    padding: 10px;
+    border-bottom: 1px solid;
+    border-color: black;
+}
+
+.task-title {
+    font-size: 1.5rem;
+    text-align: left;
+}
+
+.complete-icon {
+    display: flex;
+    grid-column: 2;
+    align-self: center;
+    font-size: 1.5rem;
+    padding: 10px;
+    cursor: pointer;
+    vertical-align: middle;
+    justify-content: center;
+}
+
+.error-task {
+    font-size: 1.5rem;
+    text-align: left;
+    padding: 10px;
+    border-bottom: 1px solid;
+    border-color: black;
+}
+
+/* ADD Task */
+
+.add-icon {
+    display: flex;
+    grid-column: 2;
+    align-self: center;
+    font-size: 1.5rem;
+    padding: 10px;
+    cursor: pointer;
+    vertical-align: middle;
+    justify-content: center;
+    color: #009100;
+}
+
+.new-task {
+    display: grid;
+    grid-template-columns: auto 50px;
+    padding: 10px;
+}
+
+.new-title {
+    font-size: 1.5rem;
+    text-align: left;
+    color: #999999;
+}
