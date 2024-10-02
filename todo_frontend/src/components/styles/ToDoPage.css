@@ -14,12 +14,14 @@
     border-color: black;
 }
 
-.task-title {
+.task-title,
+.error-task {
     font-size: 1.5rem;
     text-align: left;
 }
 
-.complete-icon {
+.complete-icon,
+.cross-icon {
     display: flex;
     grid-column: 2;
     align-self: center;
@@ -28,14 +30,6 @@
     cursor: pointer;
     vertical-align: middle;
     justify-content: center;
-}
-
-.error-task {
-    font-size: 1.5rem;
-    text-align: left;
-    padding: 10px;
-    border-bottom: 1px solid;
-    border-color: black;
 }
 
 /* ADD Task */

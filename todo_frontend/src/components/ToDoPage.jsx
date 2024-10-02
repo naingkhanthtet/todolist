@@ -3,7 +3,12 @@ import axios from "axios";
 import "./styles/ToDoPage.css";
 import { useNavigate } from "react-router-dom";
 import DOMPurify from "dompurify";
-import { FaPlus, FaRegCircle, FaRegCircleCheck } from "react-icons/fa6";
+import {
+    FaPlus,
+    FaRegCircle,
+    FaRegCircleCheck,
+    FaCircleXmark,
+} from "react-icons/fa6";
 
 const ToDoPage = () => {
     const [tasks, setTasks] = useState([]);
@@ -151,9 +156,14 @@ const ToDoPage = () => {
                     </span>
                 ))
             ) : (
-                <p className="error-task">
-                    Error loading tasks, try refreshing the browser{" "}
-                </p>
+                <div className="task-item">
+                    <span className="error-task">
+                        Error loading tasks, try refreshing the browser
+                    </span>
+                    <span className="cross-icon">
+                        <FaCircleXmark />
+                    </span>
+                </div>
             )}
 
             <span className="new-task">
