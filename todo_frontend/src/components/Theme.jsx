@@ -1,12 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "../App.css";
+import "./styles/Nav.css";
 
-const Theme = () => {
-    // const [isDarkMode, setIsDarkMode] = useState(false);
-    const [isDarkMode, setIsDarkMode] = useState(() => {
-        return localStorage.getItem("isDarkMode") === "true";
-    });
-
+const Theme = ({ isDarkMode, toggleTheme }) => {
     useEffect(() => {
         if (isDarkMode) {
             document.body.classList.add("dark");
@@ -18,12 +14,10 @@ const Theme = () => {
         localStorage.setItem("isDarkMode", isDarkMode);
     }, [isDarkMode]);
 
-    const toggleTheme = () => {
-        setIsDarkMode(!isDarkMode);
-    };
-
     return (
-        <button onClick={toggleTheme}>{isDarkMode ? "Light" : "Dark"}</button>
+        <button onClick={toggleTheme} className="theme-button">
+            {isDarkMode ? "Light" : "Dark"}
+        </button>
     );
 };
 

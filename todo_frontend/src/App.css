@@ -1,18 +1,13 @@
-body {
+:root {
     font-family: "Lora", serif;
     font-style: normal;
+}
+
+body {
+    font-family: "Lora";
     margin: 0;
     padding: 0;
-    background-color: #ece2ce;
-}
-
-body.light {
-    background-color: #ece2ce;
-}
-
-body.dark {
-    background-color: black;
-    color: white;
+    /* background-color: #ece2ce; */
 }
 /*
 @media (prefers-color-scheme: dark) {
@@ -40,13 +35,14 @@ body.dark {
     */
 
 button {
+    color: white;
     border: none;
     background-color: transparent;
     outline: none;
     font-size: 1.5rem;
     padding: 15px;
     font-family: "Lora", serif;
-    border: 1px solid #ece2ce;
+    /* border: 1px solid #ece2ce; */
 }
 
 button:hover {
@@ -58,7 +54,24 @@ button:focus {
     color: #ece2ce;
 }
 
+textarea {
+    color: white;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 1.5rem;
+    padding: 5px;
+    text-align: left;
+    font-family: "Lora", serif;
+    resize: none;
+    overflow: hidden;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    /* color: white; */
+}
+
 input {
+    color: white;
     background-color: transparent;
     border: none;
     outline: none;

@@ -11,6 +11,7 @@ nav {
 }
 
 .nav-text {
+    font-family: "Lora", serif;
     grid-column: 1;
     font-size: 3rem;
     text-align: left;
@@ -40,4 +41,9 @@ nav {
     cursor: pointer;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     flex-direction: column;
+    z-index: 1000;
+}
+
+.theme-button {
+    background-color: #ece2ce;
 }

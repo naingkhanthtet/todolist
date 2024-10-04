@@ -1,4 +1,6 @@
 .logout-button {
     font-size: 1.5rem;
     cursor: pointer;
+    border: 1px solid white;
+    /* background-color: #ece2ce; */
 }

@@ -11,7 +11,7 @@
     grid-template-columns: auto 50px;
     padding: 10px;
     border-bottom: 1px solid;
-    border-color: black;
+    border-color: white;
 }
 
 .task-title,
@@ -20,15 +20,20 @@
     text-align: left;
 }
 
-.complete-icon,
-.cross-icon {
+.complete-icon {
     display: flex;
     grid-column: 2;
-    align-self: center;
     font-size: 1.5rem;
     padding: 10px;
     cursor: pointer;
-    vertical-align: middle;
+    justify-content: center;
+}
+
+.cross-icon {
+    display: flex;
+    grid-column: 2;
+    font-size: 1.5rem;
+    padding: 10px;
     justify-content: center;
 }
 
@@ -37,12 +42,10 @@
 .add-icon {
     display: flex;
     grid-column: 2;
-    align-self: center;
+    justify-content: center;
     font-size: 1.5rem;
     padding: 10px;
     cursor: pointer;
-    vertical-align: middle;
-    justify-content: center;
     color: #009100;
 }
 

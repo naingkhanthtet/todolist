@@ -1,5 +1,4 @@
 import React from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./styles/Logout.css";
 
@@ -9,22 +8,8 @@ const Logout = () => {
     const handleLogout = () => {
         (async () => {
             try {
-                const { data } = await axios.post(
-                    "/logout/",
-                    {
-                        refresh_token: localStorage.getItem("refresh_token"),
-                    },
-                    {
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                    },
-                    { withCredentials: true }
-                );
-
-                console.log("logout", data);
-                localStorage.clear();
-                axios.defaults.headers.common["Authorization"] = null;
+                localStorage.removeItem("access_token");
+                localStorage.removeItem("refresh_token");
                 navigate("/login");
             } catch (e) {
                 console.log("logout not working");

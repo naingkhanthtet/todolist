@@ -2,7 +2,7 @@ FROM node:16-alpine
 
 WORKDIR /app
 
-COPY package.json yarn.lock /app/
+COPY package.json /app/
 COPY public/ /app/public
 COPY src/ /app/src
 

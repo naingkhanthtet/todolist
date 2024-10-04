@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import "./styles/ToDoPage.css";
 import { useNavigate } from "react-router-dom";
 import DOMPurify from "dompurify";
@@ -9,6 +8,7 @@ import {
     FaRegCircleCheck,
     FaCircleXmark,
 } from "react-icons/fa6";
+import axiosInstance from "../axiosInstance";
 
 const ToDoPage = () => {
     const [tasks, setTasks] = useState([]);
@@ -18,30 +18,33 @@ const ToDoPage = () => {
     });
     const [clickedDeleteIds, setClickedDeleteIds] = useState([]);
     const [deleteTimeoutIds, setDeleteTimeoutIds] = useState({});
+    const [error, setError] = useState(false);
+    const token = localStorage.getItem("access_token");
     const navigate = useNavigate();
 
     if (localStorage.getItem("access_token") === null) {
         navigate("/login");
     }
 
+    const autoResize = (e) => {
+        e.target.style.height = "auto";
+        e.target.style.height = `${e.target.scrollHeight}px`;
+    };
+
+    // fetch tasks
     useEffect(() => {
-        (async () => {
+        const fetchTasks = async () => {
             try {
-                const { data } = await axios.get("/tasks/", {
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${localStorage.getItem(
-                            "access_token"
-                        )}`,
-                    },
-                });
-                // set tasks if fetch complete
-                setTasks(data);
+                const res = await axiosInstance.get("/tasks/");
+                setTasks(res.data);
+                setError(false);
             } catch (err) {
-                console.error("error fetching", err);
+                setError(true);
+                console.log(err);
             }
-        })();
-    }, []);
+        };
+        fetchTasks();
+    }, [token]);
 
     // store tasks on Local storage when the value changes
     useEffect(() => {
@@ -49,19 +52,27 @@ const ToDoPage = () => {
     }, [taskEdits]);
 
     // add task to database and set tasks value
-    const addTask = () => {
+    const addTask = async () => {
         const purifiedNewTask = DOMPurify.sanitize(newTaskTitle);
         if (purifiedNewTask.trim() === "") {
             alert("Please add valid task title");
             return;
         }
-        axios
-            .post("/tasks/", { title: purifiedNewTask, completed: false })
-            .then((res) => {
-                setTasks([...tasks, res.data]);
-                setNewTaskTitle(""); // reset input form after adding task
-            })
-            .catch((err) => console.error("Error creating task:", err));
+        try {
+            const res = await axiosInstance.post("/tasks/", {
+                title: purifiedNewTask,
+                completed: false,
+            });
+            if (res.status >= 200 && res.status <= 300) {
+                const newTask = res.data;
+                setTasks([...tasks, newTask]);
+                setNewTaskTitle("");
+            } else {
+                console.log("Cannot add now");
+            }
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     // store edited task
@@ -71,26 +82,31 @@ const ToDoPage = () => {
     };
 
     // send PUT request with updated task
-    const updateTask = (task) => {
+    const updateTask = async (task) => {
         const editedTaskTitle = taskEdits[task.id] || task.title;
-        axios
-            .put(`/tasks/${task.id}/`, {
+        try {
+            const res = await axiosInstance.put(`/tasks/${task.id}/`, {
                 title: editedTaskTitle,
                 completed: task.completed,
-            })
-            .then((res) => {
-                setTasks(tasks.map((t) => (t.id === task.id ? res.data : t)));
+            });
+            if (res.status >= 200 && res.status <= 300) {
+                const editedTask = res.data;
+                setTasks(tasks.map((t) => (t.id === task.id ? editedTask : t)));
                 setTaskEdits((prevEdits) => {
                     // remove the edited task
                     const { [task.id]: _, ...rest } = prevEdits;
                     return rest;
                 });
-            })
-            .catch((err) => console.error("Error updating task:", err));
+            } else {
+                console.log("Cannot add now");
+            }
+        } catch (err) {
+            console.log("Error updating task", err);
+        }
     };
 
     // delete task
-    const deleteTask = (id) => {
+    const deleteTask = async (id) => {
         if (clickedDeleteIds.includes(id)) {
             clearTimeout(deleteTimeoutIds[id]);
             setClickedDeleteIds(
@@ -103,10 +119,10 @@ const ToDoPage = () => {
             });
         } else {
             setClickedDeleteIds([...clickedDeleteIds, id]);
-            const timeoutId = setTimeout(() => {
-                axios
-                    .delete(`/tasks/${id}/`)
-                    .then(() => {
+            const timeoutId = setTimeout(async () => {
+                try {
+                    const res = await axiosInstance.delete(`/tasks/${id}/`);
+                    if (res.status >= 200 && res.status <= 300) {
                         setTasks((prevTasks) =>
                             prevTasks.filter((task) => task.id !== id)
                         );
@@ -118,8 +134,12 @@ const ToDoPage = () => {
                             delete updatedTimeouts[id];
                             return updatedTimeouts;
                         });
-                    })
-                    .catch((err) => console.error("Error deleting task:", err));
+                    } else {
+                        alert(`Cannot delete ${id} now`);
+                    }
+                } catch (err) {
+                    console.log("error deleting task", err);
+                }
             }, 2000);
             setDeleteTimeoutIds((prev) => ({ ...prev, [id]: timeoutId }));
         }
@@ -127,19 +147,32 @@ const ToDoPage = () => {
 
     return (
         <div className="todo-list">
-            {tasks && tasks.length > 0 ? (
+            {error ? (
+                <div className="task-item">
+                    <span className="error-task">
+                        Error loading tasks, try refreshing the browser
+                    </span>
+                    <span className="cross-icon">
+                        <FaCircleXmark />
+                    </span>
+                </div>
+            ) : tasks && tasks.length > 0 ? (
                 tasks.map((task) => (
                     <span className="task-item" key={task.id}>
                         {/* Task title */}
-                        <input
+                        <textarea
                             className="task-title"
                             type="text"
                             value={taskEdits[task.id] || task.title} // title from localstorage or from backend
-                            onChange={(e) => handleTaskEdits(e, task)}
+                            onChange={(e) => {
+                                handleTaskEdits(e, task);
+                                autoResize(e);
+                            }}
                             onKeyDown={(e) =>
                                 e.key === "Enter" && updateTask(task)
                             }
                             onBlur={() => updateTask(task)}
+                            rows={1}
                         />
 
                         {/* Delete button */}
@@ -158,26 +191,29 @@ const ToDoPage = () => {
             ) : (
                 <div className="task-item">
                     <span className="error-task">
-                        Error loading tasks, try refreshing the browser
-                    </span>
-                    <span className="cross-icon">
-                        <FaCircleXmark />
+                        No task created, add one now
                     </span>
                 </div>
             )}
 
             <span className="new-task">
                 {/* New Task input */}
-                <input
+                <textarea
                     className="new-title"
                     type="text"
                     value={newTaskTitle}
-                    onChange={(e) => setNewTaskTitle(e.target.value)}
+                    onChange={(e) => {
+                        setNewTaskTitle(e.target.value);
+                        autoResize(e);
+                    }}
                     onKeyDown={(e) => e.key === "Enter" && addTask()}
-                    placeholder="Add new task"
+                    rows={1}
+                    placeholder="Add new task here"
                 />
                 {/* Add button */}
-                <FaPlus className="add-icon" onClick={addTask} />
+                <span className="add-icon" onClick={addTask}>
+                    <FaPlus />
+                </span>
             </span>
         </div>
     );

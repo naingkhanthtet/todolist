@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axiosInstance from "../axiosInstance";
 import { useNavigate } from "react-router-dom";
 import "./styles/Login.css";
 
@@ -17,19 +17,13 @@ const Login = ({ setToken }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const { data } = await axios.post(`/token/`, formData, {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                withCredentials: true,
-            });
-
+            const { data } = await axiosInstance.post(`/token/`, formData);
             localStorage.clear();
             localStorage.setItem("access_token", data.access);
             localStorage.setItem("refresh_token", data.refresh);
             setToken(data.access);
 
-            axios.defaults.headers.common[
+            axiosInstance.defaults.headers.common[
                 "Authorization"
             ] = `Bearer ${data["access"]}`;
             navigate("/home");
