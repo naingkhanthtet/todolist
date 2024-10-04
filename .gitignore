@@ -13,6 +13,7 @@
 
 # misc
 .DS_Store
+.env
 .env.local
 .env.development.local
 .env.test.local
@@ -179,6 +180,7 @@ dmypy.json
 cython_debug/
 todo-env/
 todo_frontend/node_modules
+todo_backend/staticfiles
 
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
