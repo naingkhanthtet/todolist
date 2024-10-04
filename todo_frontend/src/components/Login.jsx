@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axiosInstance from "../axiosInstance";
+import axiosInstance from "../interceptor/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import "./styles/Login.css";
 
@@ -18,7 +18,9 @@ const Login = ({ setToken }) => {
         e.preventDefault();
         try {
             const { data } = await axiosInstance.post(`/token/`, formData);
-            localStorage.clear();
+            localStorage.removeItem("access_token");
+            localStorage.removeItem("refresh_token");
+            localStorage.removeItem("taskEdits");
             localStorage.setItem("access_token", data.access);
             localStorage.setItem("refresh_token", data.refresh);
             setToken(data.access);

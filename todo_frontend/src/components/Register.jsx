@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import axios from "axios";
+// import axios from "axios";
+import axiosInstance from "../interceptor/axiosInstance";
 import "./styles/Register.css";
 import { useNavigate } from "react-router-dom";
 
-const Register = ({ setToken }) => {
+const Register = () => {
     const [formData, setFormData] = useState({
         username: "",
         email: "",
@@ -16,7 +17,7 @@ const Register = ({ setToken }) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (formData.password.length < 8) {
@@ -25,14 +26,20 @@ const Register = ({ setToken }) => {
         } else if (formData.password !== formData.re_password) {
             alert("Password do not match");
         } else {
-            axios
-                .post(`/auth/users/`, formData)
-                .then((res) => {
-                    setToken(res.data.token);
-                    alert("Registration is successful");
-                    navigate("/home");
-                })
-                .catch((err) => console.error("Registration failed", err));
+            try {
+                const res = await axiosInstance.post(`/auth/users/`, formData);
+                if (res.status >= 200 && res.status <= 300) {
+                    alert("Registration successful");
+                    navigate("/login");
+                }
+            } catch (err) {
+                console.log("Error registering", err);
+                if (err.response && err.response.status === 400) {
+                    alert("User already exists or invalid data");
+                } else {
+                    alert("Registration failed. Please try again.");
+                }
+            }
         }
     };
 

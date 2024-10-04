@@ -48,9 +48,10 @@ axiosInstance.interceptors.response.use(
                     return axiosInstance(originalRequest);
                 }
             } catch (tokenRefreshError) {
-                console.error("Token refresh failed", tokenRefreshError);
-                localStorage.clear();
-                window.location.href = "/login";
+                console.log("Token refresh failed", tokenRefreshError);
+                localStorage.removeItem("access_token");
+                localStorage.removeItem("refresh_token");
+                window.location.href("/login");
                 return Promise.reject(tokenRefreshError);
             }
         }

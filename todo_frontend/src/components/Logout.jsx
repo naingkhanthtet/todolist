@@ -1,6 +1,5 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "./styles/Logout.css";
 
 const Logout = () => {
     const navigate = useNavigate();
@@ -10,6 +9,7 @@ const Logout = () => {
             try {
                 localStorage.removeItem("access_token");
                 localStorage.removeItem("refresh_token");
+                localStorage.removeItem("taskEdits");
                 navigate("/login");
             } catch (e) {
                 console.log("logout not working");

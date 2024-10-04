@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import "../App.css";
-import "./styles/Nav.css";
+// import "./styles/Nav.css";
 import { IoMenuSharp } from "react-icons/io5";
 import { useLocation } from "react-router-dom";
 import Logout from "./Logout";
+import Theme from "./Theme";
 
-export default function Nav() {
+export default function Nav({ toggleTheme, isDarkMode }) {
     const [dropDown, setDropdown] = useState(false);
     const location = useLocation();
     let navTitle = "ToDoList";
@@ -39,7 +39,10 @@ export default function Nav() {
                         {dropDown && (
                             <div className="nav-dropdown">
                                 <Logout />
-                                {/* <Theme /> */}
+                                <Theme
+                                    toggleTheme={toggleTheme}
+                                    isDarkMode={isDarkMode}
+                                />
                             </div>
                         )}
                     </div>

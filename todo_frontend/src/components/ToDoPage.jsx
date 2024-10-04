@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./styles/ToDoPage.css";
-import { useNavigate } from "react-router-dom";
+// import "./styles/ToDoPage.css";
 import DOMPurify from "dompurify";
 import {
     FaPlus,
@@ -8,7 +7,7 @@ import {
     FaRegCircleCheck,
     FaCircleXmark,
 } from "react-icons/fa6";
-import axiosInstance from "../axiosInstance";
+import axiosInstance from "../interceptor/axiosInstance";
 
 const ToDoPage = () => {
     const [tasks, setTasks] = useState([]);
@@ -20,16 +19,6 @@ const ToDoPage = () => {
     const [deleteTimeoutIds, setDeleteTimeoutIds] = useState({});
     const [error, setError] = useState(false);
     const token = localStorage.getItem("access_token");
-    const navigate = useNavigate();
-
-    if (localStorage.getItem("access_token") === null) {
-        navigate("/login");
-    }
-
-    const autoResize = (e) => {
-        e.target.style.height = "auto";
-        e.target.style.height = `${e.target.scrollHeight}px`;
-    };
 
     // fetch tasks
     useEffect(() => {
@@ -166,13 +155,12 @@ const ToDoPage = () => {
                             value={taskEdits[task.id] || task.title} // title from localstorage or from backend
                             onChange={(e) => {
                                 handleTaskEdits(e, task);
-                                autoResize(e);
                             }}
                             onKeyDown={(e) =>
                                 e.key === "Enter" && updateTask(task)
                             }
                             onBlur={() => updateTask(task)}
-                            rows={1}
+                            maxLength={100}
                         />
 
                         {/* Delete button */}
@@ -204,11 +192,11 @@ const ToDoPage = () => {
                     value={newTaskTitle}
                     onChange={(e) => {
                         setNewTaskTitle(e.target.value);
-                        autoResize(e);
                     }}
                     onKeyDown={(e) => e.key === "Enter" && addTask()}
                     rows={1}
                     placeholder="Add new task here"
+                    maxLength={100}
                 />
                 {/* Add button */}
                 <span className="add-icon" onClick={addTask}>

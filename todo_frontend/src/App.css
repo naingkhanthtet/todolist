@@ -9,30 +9,6 @@ body {
     padding: 0;
     /* background-color: #ece2ce; */
 }
-/*
-@media (prefers-color-scheme: dark) {
-    body {
-        background-color: #181818;
-        color: wheat;
-    }
-
-    .todo-list {
-        color: wheat;
-    }
-
-    .task-title {
-        color: wheat;
-    }
-
-    .add-icon {
-        color: #01c001;
-    }
-
-    .task-item {
-        border-color: wheat;
-    }
-}
-    */
 
 button {
     color: white;
@@ -46,28 +22,21 @@ button {
 }
 
 button:hover {
-    border: 1px solid black;
-}
-
-button:focus {
-    background-color: black;
-    color: #ece2ce;
+    background-color: white;
+    color: black;
 }
 
 textarea {
     color: white;
+    /* padding: 10px; */
     background-color: transparent;
     border: none;
     outline: none;
     font-size: 1.5rem;
-    padding: 5px;
     text-align: left;
     font-family: "Lora", serif;
     resize: none;
     overflow: hidden;
-    word-wrap: break-word;
-    white-space: pre-wrap;
-    /* color: white; */
 }
 
 input {
