@@ -26,19 +26,6 @@ button:hover {
     color: black;
 }
 
-textarea {
-    color: white;
-    /* padding: 10px; */
-    background-color: transparent;
-    border: none;
-    outline: none;
-    font-size: 1.5rem;
-    text-align: left;
-    font-family: "Lora", serif;
-    resize: none;
-    overflow: hidden;
-}
-
 input {
     color: white;
     background-color: transparent;

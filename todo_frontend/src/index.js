@@ -2,7 +2,7 @@ import "@fontsource/lora";
 import "@fontsource/lora/400.css";
 import "@fontsource/lora/400-italic.css";
 
-import React, { useState } from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
 // import "./index.css";
 import App from "./App";
@@ -16,6 +16,17 @@ root.render(
         <App />
     </React.StrictMode>
 );
+
+const observerErrorHandler = (e) => {
+    if (
+        e.message ===
+        "ResizeObserver loop completed with undelivered notifications."
+    ) {
+        e.stopImmediatePropagation();
+    }
+};
+
+window.addEventListener("error", observerErrorHandler);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
