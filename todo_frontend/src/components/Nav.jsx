@@ -10,7 +10,6 @@ import {
     StyledBox,
     StyledIcons,
 } from "./styles/StyledComponents";
-
 export default function Nav({ toggleTheme, isDarkMode }) {
     const [dropDown, setDropdown] = useState(false);
     const location = useLocation();
@@ -35,12 +34,10 @@ export default function Nav({ toggleTheme, isDarkMode }) {
 
     return (
         <StyledBox>
-            {/* <div className="nav-header"> */}
-            {/* <p className="nav-text">{navTitle}</p> */}
             <NavText>{navTitle}</NavText>
 
             {showMenu && (
-                <StyledIcons onClick={toggleMenu}>
+                <StyledIcons onClick={toggleMenu} sx={{ fontSize: "3rem" }}>
                     <IoMenuSharp className="nav-menu-icon" />
 
                     {dropDown && (
@@ -54,21 +51,6 @@ export default function Nav({ toggleTheme, isDarkMode }) {
                     )}
                 </StyledIcons>
             )}
-            {/* </div> */}
         </StyledBox>
     );
 }
-
-// <div className="nav-menu" onClick={toggleMenu}>
-//     <IoMenuSharp className="nav-menu-icon" />
-
-//     {dropDown && (
-//         <div className="nav-dropdown">
-//             <Logout />
-//             <Theme
-//                 toggleTheme={toggleTheme}
-//                 isDarkMode={isDarkMode}
-//             />
-//         </div>
-//     )}
-// </div>

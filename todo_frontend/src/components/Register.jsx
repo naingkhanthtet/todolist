@@ -1,8 +1,13 @@
 import React, { useState } from "react";
-// import axios from "axios";
 import axiosInstance from "../interceptor/axiosInstance";
 import "./styles/Register.css";
 import { useNavigate } from "react-router-dom";
+import {
+    StyledBox,
+    StyledButton,
+    StyledForm,
+    StyledInput,
+} from "./styles/StyledComponents";
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -44,45 +49,44 @@ const Register = () => {
     };
 
     return (
-        <div className="register-page">
-            <form onSubmit={handleSubmit} className="register-form">
-                <input
+        <StyledBox>
+            <StyledForm component="form" onSubmit={handleSubmit}>
+                <StyledInput
                     type="text"
                     name="username"
                     onChange={handleChange}
                     placeholder="Your username"
-                    className="register-username"
                     required
                 />
-                <input
+                <StyledInput
                     type="email"
                     name="email"
                     onChange={handleChange}
                     placeholder="Your fake email"
-                    className="register-email"
                     required
                 />
-                <input
+                <StyledInput
                     type="password"
                     name="password"
                     onChange={handleChange}
                     placeholder="Your secure password"
-                    className="register-password"
                     required
                 />
-                <input
+                <StyledInput
                     type="password"
                     name="re_password"
                     onChange={handleChange}
                     placeholder="Retype your secure password"
-                    className="register-repassword"
                     required
                 />
-                <button type="submit" className="register-submit">
+                <StyledButton
+                    type="submit"
+                    sx={{ width: "fit-content", marginTop: "20px" }}
+                >
                     Submit
-                </button>
-            </form>
-        </div>
+                </StyledButton>
+            </StyledForm>
+        </StyledBox>
     );
 };
 

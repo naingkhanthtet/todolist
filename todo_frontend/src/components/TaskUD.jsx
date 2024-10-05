@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { FaRegCircle, FaRegCircleCheck } from "react-icons/fa6";
 import axiosInstance from "../interceptor/axiosInstance";
-import { StyledTextarea } from "./styles/StyledComponents";
+import { StyledIcons, StyledTextarea } from "./styles/StyledComponents";
+import { StyledBox } from "./styles/StyledComponents";
+// import Textarea from "@mui/joy/Textarea";
 
 const TaskUD = ({ tasks, setTasks }) => {
     const [taskEdits, setTaskEdits] = useState(() => {
@@ -86,9 +88,9 @@ const TaskUD = ({ tasks, setTasks }) => {
     };
 
     return (
-        <div>
+        <>
             {tasks.map((task) => (
-                <div className="task-item" key={task.id}>
+                <StyledBox key={task.id}>
                     {/* Task title */}
                     <StyledTextarea
                         className="task-title"
@@ -100,21 +102,22 @@ const TaskUD = ({ tasks, setTasks }) => {
                         onBlur={() => updateTask(task)}
                         maxLength={100}
                     />
+                    {/* <Textarea value={taskEdits[task.id] || task.title} /> */}
 
                     {/* Delete button */}
-                    <span
-                        className="complete-icon"
+                    <StyledIcons
                         onClick={() => deleteTask(task.id)}
+                        sx={{ fontSize: "1.5rem" }}
                     >
                         {clickedDeleteIds.includes(task.id) ? (
                             <FaRegCircleCheck />
                         ) : (
                             <FaRegCircle />
                         )}
-                    </span>
-                </div>
+                    </StyledIcons>
+                </StyledBox>
             ))}
-        </div>
+        </>
     );
 };
 

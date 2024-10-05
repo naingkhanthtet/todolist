@@ -2,7 +2,12 @@ import React, { useState } from "react";
 import DOMPurify from "dompurify";
 import axiosInstance from "../interceptor/axiosInstance";
 import { FaPlus } from "react-icons/fa6";
-import { StyledTextarea } from "./styles/StyledComponents";
+import {
+    StyledBox,
+    StyledIcons,
+    StyledTextarea,
+} from "./styles/StyledComponents";
+// import Textarea from "@mui/joy/Textarea";
 
 const TaskAdd = ({ handleAddTask }) => {
     const [newTaskTitle, setNewTaskTitle] = useState("");
@@ -31,8 +36,7 @@ const TaskAdd = ({ handleAddTask }) => {
     };
 
     return (
-        <span className="new-task">
-            {/* New Task input */}
+        <StyledBox>
             <StyledTextarea
                 className="new-title"
                 value={newTaskTitle}
@@ -41,11 +45,15 @@ const TaskAdd = ({ handleAddTask }) => {
                 placeholder="Add new task here"
                 maxLength={100}
             />
+            {/* <Textarea value={newTaskTitle} /> */}
             {/* Add button */}
-            <span className="add-icon" onClick={addTask}>
+            <StyledIcons onClick={addTask} sx={{ fontSize: "1.5rem" }}>
                 <FaPlus />
-            </span>
-        </span>
+            </StyledIcons>
+            {/* <span className="add-icon" onClick={addTask}>
+                <FaPlus />
+            </span> */}
+        </StyledBox>
     );
 };
 

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-// import "./styles/ToDoPage.css";
 import { FaCircleXmark } from "react-icons/fa6";
 import axiosInstance from "../interceptor/axiosInstance";
 import TaskUD from "./TaskUD";
 import TaskAdd from "./TaskAdd";
+import Box from "@mui/joy/Box";
+import { StyledBox } from "./styles/StyledComponents";
 
 const ToDoPage = () => {
     const [tasks, setTasks] = useState([]);
@@ -44,11 +45,11 @@ const ToDoPage = () => {
                     <TaskUD tasks={tasks} setTasks={setTasks} />
                 </div>
             ) : (
-                <div className="task-item">
-                    <span className="error-task">
+                <StyledBox>
+                    <Box sx={{ padding: "10px" }}>
                         No task created, add one now
-                    </span>
-                </div>
+                    </Box>
+                </StyledBox>
             )}
             <TaskAdd handleAddTask={handleAddTask} />
         </div>
@@ -56,13 +57,3 @@ const ToDoPage = () => {
 };
 
 export default ToDoPage;
-
-/*
-) : (
-    <div className="task-item">
-        <span className="error-task">
-            No task created, add one now
-        </span>
-    </div>
-)
-    */

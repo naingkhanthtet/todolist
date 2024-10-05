@@ -7,6 +7,7 @@
         "@emotion/styled": "^11.13.0",
         "@fontsource/lora": "^5.1.0",
         "@mui/base": "^5.0.0-beta.58",
+        "@mui/joy": "^5.0.0-beta.48",
         "@mui/material": "^6.1.2",
         "@mui/system": "^6.1.2",
         "@testing-library/jest-dom": "^5.17.0",

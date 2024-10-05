@@ -6,9 +6,6 @@ const Theme = ({ isDarkMode, toggleTheme }) => {
         <StyledButton onClick={toggleTheme}>
             {isDarkMode ? "Light" : "Dark"}
         </StyledButton>
-        // <button onClick={toggleTheme} className="theme-button">
-        //     {isDarkMode ? "Light" : "Dark"}
-        // </button>
     );
 };
 

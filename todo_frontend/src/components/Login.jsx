@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import axiosInstance from "../interceptor/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import "./styles/Login.css";
+import {
+    StyledBox,
+    StyledButton,
+    StyledInput,
+} from "./styles/StyledComponents";
 
 const Login = ({ setToken }) => {
     const [formData, setFormData] = useState({
@@ -36,31 +41,39 @@ const Login = ({ setToken }) => {
     };
 
     return (
-        <div className="login-page">
-            <div className="login-contents">
-                <form onSubmit={handleSubmit} className="login-form">
-                    <input
-                        type="text"
-                        name="username"
-                        onChange={handleChange}
-                        placeholder="Your username"
-                        className="login-username"
-                        required
-                    />
-                    <input
-                        type="password"
-                        name="password"
-                        onChange={handleChange}
-                        placeholder="Your secure password"
-                        className="login-password"
-                        required
-                    />
-                    <button type="submit" className="login-submit">
-                        Submit
-                    </button>
-                </form>
-            </div>
-        </div>
+        <StyledBox>
+            <form
+                onSubmit={handleSubmit}
+                style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "stretch",
+                    textAlign: "left",
+                    width: "100%",
+                }}
+            >
+                <StyledInput
+                    type="text"
+                    name="username"
+                    onChange={handleChange}
+                    placeholder="Your username"
+                    required
+                />
+                <StyledInput
+                    type="password"
+                    name="password"
+                    onChange={handleChange}
+                    placeholder="Your secure password"
+                    required
+                />
+                <StyledButton
+                    type="submit"
+                    sx={{ width: "fit-content", marginTop: "20px" }}
+                >
+                    Submit
+                </StyledButton>
+            </form>
+        </StyledBox>
     );
 };
 
