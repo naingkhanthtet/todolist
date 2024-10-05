@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaRegCircle, FaRegCircleCheck } from "react-icons/fa6";
 import axiosInstance from "../interceptor/axiosInstance";
-import { StyledTextarea } from "./StyledComponents";
+import { StyledTextarea } from "./styles/StyledComponents";
 
 const TaskUD = ({ tasks, setTasks }) => {
     const [taskEdits, setTaskEdits] = useState(() => {

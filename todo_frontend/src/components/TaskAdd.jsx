@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import DOMPurify from "dompurify";
 import axiosInstance from "../interceptor/axiosInstance";
 import { FaPlus } from "react-icons/fa6";
-import { StyledTextarea } from "./StyledComponents";
+import { StyledTextarea } from "./styles/StyledComponents";
 
 const TaskAdd = ({ handleAddTask }) => {
     const [newTaskTitle, setNewTaskTitle] = useState("");

@@ -1,10 +1,14 @@
 import React from "react";
+import { StyledButton } from "./styles/StyledComponents";
 
 const Theme = ({ isDarkMode, toggleTheme }) => {
     return (
-        <button onClick={toggleTheme} className="theme-button">
+        <StyledButton onClick={toggleTheme}>
             {isDarkMode ? "Light" : "Dark"}
-        </button>
+        </StyledButton>
+        // <button onClick={toggleTheme} className="theme-button">
+        //     {isDarkMode ? "Light" : "Dark"}
+        // </button>
     );
 };
 

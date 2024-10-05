@@ -4,6 +4,12 @@ import { IoMenuSharp } from "react-icons/io5";
 import { useLocation } from "react-router-dom";
 import Logout from "./Logout";
 import Theme from "./Theme";
+import {
+    DropdownComponent,
+    NavText,
+    StyledBox,
+    StyledIcons,
+} from "./styles/StyledComponents";
 
 export default function Nav({ toggleTheme, isDarkMode }) {
     const [dropDown, setDropdown] = useState(false);
@@ -28,26 +34,41 @@ export default function Nav({ toggleTheme, isDarkMode }) {
     }, [location]);
 
     return (
-        <nav>
-            <div className="nav-header">
-                <p className="nav-text">{navTitle}</p>
+        <StyledBox>
+            {/* <div className="nav-header"> */}
+            {/* <p className="nav-text">{navTitle}</p> */}
+            <NavText>{navTitle}</NavText>
 
-                {showMenu && (
-                    <div className="nav-menu" onClick={toggleMenu}>
-                        <IoMenuSharp className="nav-menu-icon" />
+            {showMenu && (
+                <StyledIcons onClick={toggleMenu}>
+                    <IoMenuSharp className="nav-menu-icon" />
 
-                        {dropDown && (
-                            <div className="nav-dropdown">
-                                <Logout />
-                                <Theme
-                                    toggleTheme={toggleTheme}
-                                    isDarkMode={isDarkMode}
-                                />
-                            </div>
-                        )}
-                    </div>
-                )}
-            </div>
-        </nav>
+                    {dropDown && (
+                        <DropdownComponent>
+                            <Logout />
+                            <Theme
+                                toggleTheme={toggleTheme}
+                                isDarkMode={isDarkMode}
+                            />
+                        </DropdownComponent>
+                    )}
+                </StyledIcons>
+            )}
+            {/* </div> */}
+        </StyledBox>
     );
 }
+
+// <div className="nav-menu" onClick={toggleMenu}>
+//     <IoMenuSharp className="nav-menu-icon" />
+
+//     {dropDown && (
+//         <div className="nav-dropdown">
+//             <Logout />
+//             <Theme
+//                 toggleTheme={toggleTheme}
+//                 isDarkMode={isDarkMode}
+//             />
+//         </div>
+//     )}
+// </div>

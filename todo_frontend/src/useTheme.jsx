@@ -13,6 +13,9 @@ const useTheme = () => {
     };
 
     const theme = createTheme({
+        typography: {
+            fontFamily: "Lora, Arial, sans-serif", // Add your desired font here
+        },
         palette: {
             mode: isDarkMode ? "dark" : "light",
         },
