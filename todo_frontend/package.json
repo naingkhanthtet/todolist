@@ -50,5 +50,5 @@
             "last 1 safari version"
         ]
     },
-    "proxy": "http://backend:8000"
+    "proxy": "https://naingkhanthtet.pythonanywhere.com"
 }
