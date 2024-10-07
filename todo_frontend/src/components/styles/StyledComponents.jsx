@@ -12,6 +12,7 @@ export const StyledTextarea = styled(TextareaAutosize)(({ theme }) => ({
     textAlign: "left",
     fontFamily: "Lora",
     fontSize: "1.5rem",
+    // borderBottom: `1px solid ${theme.palette.text.primary}`,
 }));
 
 export const NavText = styled(Typography)({
@@ -27,7 +28,6 @@ export const StyledBox = styled(Toolbar)({
     padding: "10px",
     display: "grid",
     gridTemplateColumns: "auto 50px",
-    paddingTop: "10px",
 });
 
 export const StyledIcons = styled(Box)({
@@ -41,6 +41,7 @@ export const StyledIcons = styled(Box)({
 export const DropdownComponent = styled(Box)(({ theme }) => ({
     backgroundColor: theme.palette.background.paper,
     color: theme.palette.text.primary,
+    border: `1px solid ${theme.palette.text.primary}`,
     position: "absolute",
     margin: "0",
     padding: "0",
@@ -59,12 +60,12 @@ export const StyledButton = styled(Box)(({ theme }) => ({
     color: theme.palette.text.primary,
     backgroundColor: "transparent",
     fontSize: "1.5rem",
-    padding: "15px",
+    padding: "10px",
     fontFamily: "Lora",
     border: "none",
     textAlign: "center",
+    cursor: "pointer",
     ":hover": {
-        // border: `1px solid ${theme.palette.text.primary}`,
         backgroundColor: theme.palette.text.primary,
         color: theme.palette.background.paper,
     },
@@ -76,7 +77,7 @@ export const StyledInput = styled(Input)(({ theme }) => ({
     outline: "none",
     border: "none",
     fontSize: "1.5rem",
-    padding: "15px",
+    padding: "10px",
     textAlign: "left",
     fontFamily: "Lora",
 }));

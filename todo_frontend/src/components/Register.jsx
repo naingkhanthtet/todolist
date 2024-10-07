@@ -1,90 +1,93 @@
-import React, { useState } from "react";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import axiosInstance from "../interceptor/axiosInstance";
-import "./styles/Register.css";
 import { useNavigate } from "react-router-dom";
+import { Box } from "@mui/material";
 import {
     StyledBox,
     StyledButton,
     StyledForm,
     StyledInput,
 } from "./styles/StyledComponents";
+import { validationSchema } from "./validationSchema";
 
 const Register = () => {
-    const [formData, setFormData] = useState({
-        username: "",
-        email: "",
-        password: "",
-        re_password: "",
-    });
     const navigate = useNavigate();
 
-    const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({
+        resolver: yupResolver(validationSchema),
+    });
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        if (formData.password.length < 8) {
-            alert("Password must be at least 8 characters long");
-            return;
-        } else if (formData.password !== formData.re_password) {
-            alert("Password do not match");
-        } else {
-            try {
-                const res = await axiosInstance.post(`/auth/users/`, formData);
-                if (res.status >= 200 && res.status <= 300) {
-                    alert("Registration successful");
-                    navigate("/login");
-                }
-            } catch (err) {
-                console.log("Error registering", err);
-                if (err.response && err.response.status === 400) {
-                    alert("User already exists or invalid data");
-                } else {
-                    alert("Registration failed. Please try again.");
-                }
+    const onSubmit = async (formData) => {
+        try {
+            const res = await axiosInstance.post(`/auth/users/`, formData);
+            if (res.status >= 200 && res.status <= 300) {
+                alert("Registration successful");
+                navigate("/login");
+            }
+        } catch (err) {
+            console.log("Error registering", err);
+            if (err.response && err.response.status === 400) {
+                alert("User already exists or invalid data");
+            } else {
+                alert("Registration failed. Please try again.");
             }
         }
     };
 
     return (
         <StyledBox>
-            <StyledForm component="form" onSubmit={handleSubmit}>
+            <StyledForm component="form" onSubmit={handleSubmit(onSubmit)}>
                 <StyledInput
                     type="text"
-                    name="username"
-                    onChange={handleChange}
                     placeholder="Your username"
+                    {...register("username")}
                     required
                 />
+                {errors.username && <span>{errors.username.message}</span>}
                 <StyledInput
                     type="email"
-                    name="email"
-                    onChange={handleChange}
                     placeholder="Your fake email"
+                    {...register("email")}
                     required
                 />
+                {errors.email && <span>{errors.email.message}</span>}
                 <StyledInput
                     type="password"
-                    name="password"
-                    onChange={handleChange}
                     placeholder="Your secure password"
+                    {...register("password")}
                     required
                 />
+                {errors.password && <span>{errors.password.message}</span>}
                 <StyledInput
                     type="password"
-                    name="re_password"
-                    onChange={handleChange}
                     placeholder="Retype your secure password"
+                    {...register("re_password")}
                     required
                 />
+                {errors.re_password && (
+                    <span>{errors.re_password.message}</span>
+                )}
                 <StyledButton
                     type="submit"
                     sx={{ width: "fit-content", marginTop: "20px" }}
                 >
                     Submit
                 </StyledButton>
+                <Box
+                    sx={{
+                        cursor: "pointer",
+                        padding: "10px",
+                    }}
+                    onClick={() => navigate("/login")}
+                >
+                    Already a registered user?
+                </Box>
             </StyledForm>
         </StyledBox>
     );

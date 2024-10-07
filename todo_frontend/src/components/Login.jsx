@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import axiosInstance from "../interceptor/axiosInstance";
 import { useNavigate } from "react-router-dom";
-import "./styles/Login.css";
 import {
     StyledBox,
     StyledButton,
+    StyledForm,
     StyledInput,
 } from "./styles/StyledComponents";
+import { Box } from "@mui/system";
 
 const Login = ({ setToken }) => {
     const [formData, setFormData] = useState({
@@ -42,16 +43,7 @@ const Login = ({ setToken }) => {
 
     return (
         <StyledBox>
-            <form
-                onSubmit={handleSubmit}
-                style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "stretch",
-                    textAlign: "left",
-                    width: "100%",
-                }}
-            >
+            <StyledForm component="form" onSubmit={handleSubmit}>
                 <StyledInput
                     type="text"
                     name="username"
@@ -72,7 +64,13 @@ const Login = ({ setToken }) => {
                 >
                     Submit
                 </StyledButton>
-            </form>
+                <Box
+                    sx={{ cursor: "pointer", padding: "10px" }}
+                    onClick={() => navigate("/register")}
+                >
+                    New to ToDoList?
+                </Box>
+            </StyledForm>
         </StyledBox>
     );
 };

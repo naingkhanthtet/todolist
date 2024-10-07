@@ -38,7 +38,10 @@ export default function Nav({ toggleTheme, isDarkMode }) {
 
             {showMenu && (
                 <StyledIcons onClick={toggleMenu} sx={{ fontSize: "3rem" }}>
-                    <IoMenuSharp className="nav-menu-icon" />
+                    <IoMenuSharp
+                        className="nav-menu-icon"
+                        style={{ opacity: dropDown ? 0.5 : 1 }}
+                    />
 
                     {dropDown && (
                         <DropdownComponent>
