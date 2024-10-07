@@ -39,14 +39,14 @@ services:
             - ./todo_backend:/app
         ports:
             - "8000:8000"
-        depends_on:
-            - db
         environment:
             - MYSQL_DATABASE=${MYSQL_DATABASE}
             - MYSQL_USER=${MYSQL_USER}
             - MYSQL_PASSWORD=${MYSQL_PASSWORD}
             - MYSQL_HOST=${MYSQL_HOST}
             - MYSQL_PORT=${MYSQL_PORT}
+        depends_on:
+            - db
     frontend:
         build: ./todo_frontend
         container_name: todo_frontend

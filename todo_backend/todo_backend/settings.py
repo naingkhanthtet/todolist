@@ -94,8 +94,8 @@ DATABASES = {
         "NAME": config("MYSQL_DATABASE"),
         "USER": config("MYSQL_USER"),
         "PASSWORD": config("MYSQL_PASSWORD"),
-        # "HOST": config("DB_HOST", "db"),
-        "HOST": "127.0.0.1",
+        "HOST": config("DB_HOST", "db"),
+        # "HOST": "127.0.0.1",
         "PORT": config("DB_PORT", "3306"),
     }
 }
