@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 import os
 from pathlib import Path
+import dj_database_url
 from datetime import timedelta
 from decouple import config
 
@@ -26,14 +27,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config("DEBUG")
 
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
-    "backend",
     "0.0.0.0",
 ]
+ALLOWED_HOSTS += config("ALLOWED_HOSTS").split()
 
 
 # Application definition
@@ -88,28 +89,22 @@ WSGI_APPLICATION = "todo_backend.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": config("MYSQL_DATABASE"),
-        "USER": config("MYSQL_USER"),
-        "PASSWORD": config("MYSQL_PASSWORD"),
-        "HOST": config("DB_HOST", "db"),
-        # "HOST": "127.0.0.1",
-        "PORT": config("DB_PORT", "3306"),
-    }
-}
 # DATABASES = {
 #     "default": {
 #         "ENGINE": "django.db.backends.mysql",
-#         "NAME": "todolist",
-#         "USER": "admintodo",
-#         "PASSWORD": "admintodo@123!",
+#         "NAME": config("MYSQL_DATABASE"),
+#         "USER": config("MYSQL_USER"),
+#         "PASSWORD": config("MYSQL_PASSWORD"),
+#         "HOST": config("DB_HOST", "db"),
 #         # "HOST": "127.0.0.1",
-#         "HOST": "127.0.0.1",
-#         "PORT": "3306",
+#         "PORT": config("DB_PORT", "3306"),
 #     }
 # }
+DATABASES = {
+    "default": dj_database_url.config(
+        default="sqlite:///" + os.path.join(BASE_DIR, "db.sqlite3")
+    )
+}
 
 
 # Password validation
