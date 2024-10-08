@@ -14,10 +14,24 @@ const useTheme = () => {
 
     const theme = createTheme({
         typography: {
-            fontFamily: "Lora, Arial, sans-serif", // Add your desired font here
+            fontFamily: "Lora, Arial, sans-serif",
         },
         palette: {
             mode: isDarkMode ? "dark" : "light",
+            ...(isDarkMode
+                ? {}
+                : {
+                      primary: {
+                          main: "#000000",
+                      },
+                      text: {
+                          primary: "#000000",
+                      },
+                      background: {
+                          default: "#eee2cb",
+                          paper: "#eee2cb",
+                      },
+                  }),
         },
     });
 
