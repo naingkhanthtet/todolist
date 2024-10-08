@@ -41,6 +41,7 @@ export default function Nav({ toggleTheme, isDarkMode }) {
                     <IoMenuSharp
                         className="nav-menu-icon"
                         style={{ opacity: dropDown ? 0.5 : 1 }}
+                        onBlur={() => setDropdown(false)}
                     />
 
                     {dropDown && (

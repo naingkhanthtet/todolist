@@ -1,18 +1,16 @@
-import { TextareaAutosize } from "@mui/base";
-import { Toolbar, Typography, Box, Input } from "@mui/material";
-import { styled } from "@mui/system";
+// import { TextareaAutosize } from "@mui/base";
+// import Textarea from "@mui/joy/Textarea";
+import { Toolbar, Typography, Box, Input, TextField } from "@mui/material";
+import { style, styled } from "@mui/system";
 
-export const StyledTextarea = styled(TextareaAutosize)(({ theme }) => ({
+export const StyledTextarea = styled(TextField)(({ theme }) => ({
     backgroundColor: theme.palette.background.paper,
     color: theme.palette.text.primary,
-    border: "none",
-    outline: "none",
-    padding: "10px",
     resize: "none",
     textAlign: "left",
     fontFamily: "Lora",
     fontSize: "1.5rem",
-    // borderBottom: `1px solid ${theme.palette.text.primary}`,
+    padding: "10px",
 }));
 
 export const NavText = styled(Typography)({
@@ -20,6 +18,11 @@ export const NavText = styled(Typography)({
     textAlign: "left",
     gridColumn: 1,
     padding: "10px",
+});
+
+export const TaskTitle = styled(Box)({
+    padding: "10px",
+    fontSize: "1.5rem",
 });
 
 export const StyledBox = styled(Toolbar)({
@@ -88,4 +91,12 @@ export const StyledForm = styled(Box)({
     alignItems: "stretch",
     textAlign: "left",
     width: "100%",
+});
+
+export const AccountMessage = styled(Box)({
+    cursor: "pointer",
+    padding: "10px",
+    ":hover": {
+        textDecoration: "underline",
+    },
 });

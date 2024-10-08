@@ -3,24 +3,29 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axiosInstance from "../interceptor/axiosInstance";
 import { useNavigate } from "react-router-dom";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import {
+    AccountMessage,
     StyledBox,
     StyledButton,
     StyledForm,
     StyledInput,
 } from "./styles/StyledComponents";
 import { validationSchema } from "./validationSchema";
+import { StyledTextarea } from "./styles/StyledComponents";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Register = () => {
     const navigate = useNavigate();
-
+    const [showPassword, setShowPassword] = React.useState(false);
+    const [showRePassword, setShowRePassword] = React.useState(false);
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm({
         resolver: yupResolver(validationSchema),
+        mode: "onChange",
     });
 
     const onSubmit = async (formData) => {
@@ -43,51 +48,93 @@ const Register = () => {
     return (
         <StyledBox>
             <StyledForm component="form" onSubmit={handleSubmit(onSubmit)}>
-                <StyledInput
+                {/* username */}
+                <StyledTextarea
                     type="text"
                     placeholder="Your username"
                     {...register("username")}
+                    label="Your Username"
+                    variant="standard"
+                    error={!!errors.username}
+                    helperText={errors.username?.message}
+                    inputProps={{
+                        style: { fontSize: "1.5rem" },
+                    }}
+                    InputLabelProps={{
+                        style: { padding: "10px" },
+                    }}
                     required
                 />
-                {errors.username && <span>{errors.username.message}</span>}
-                <StyledInput
+                {/* email */}
+                <StyledTextarea
                     type="email"
-                    placeholder="Your fake email"
+                    placeholder="Your Fake Email"
                     {...register("email")}
+                    label="Your Fake Email"
+                    variant="standard"
+                    error={!!errors.email}
+                    helperText={errors.email?.message}
+                    inputProps={{
+                        style: { fontSize: "1.5rem" },
+                    }}
+                    InputLabelProps={{ style: { padding: "10px" } }}
                     required
                 />
-                {errors.email && <span>{errors.email.message}</span>}
-                <StyledInput
-                    type="password"
-                    placeholder="Your secure password"
+                {/* Password */}
+                <StyledTextarea
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Your Secure Password"
+                    label="Your Secure Password"
                     {...register("password")}
+                    variant="standard"
+                    error={!!errors.password}
+                    helperText={errors.password?.message}
+                    InputProps={{
+                        style: { fontSize: "1.5rem" },
+                        endAdornment: (
+                            <Button
+                                onClick={() => setShowPassword(!showPassword)}
+                            >
+                                {showPassword ? <FaEye /> : <FaEyeSlash />}
+                            </Button>
+                        ),
+                    }}
+                    InputLabelProps={{ style: { padding: "10px" } }}
                     required
                 />
-                {errors.password && <span>{errors.password.message}</span>}
-                <StyledInput
-                    type="password"
-                    placeholder="Retype your secure password"
+                {/* Retype password */}
+                <StyledTextarea
+                    type={showRePassword ? "text" : "password"}
+                    placeholder="Retype your Secure Password"
+                    label="Retype your Secure Password"
                     {...register("re_password")}
+                    variant="standard"
+                    error={!!errors.re_password}
+                    helperText={errors.re_password?.message}
+                    InputProps={{
+                        style: { fontSize: "1.5rem" },
+                        endAdornment: (
+                            <Button
+                                onClick={() =>
+                                    setShowRePassword(!showRePassword)
+                                }
+                            >
+                                {showRePassword ? <FaEye /> : <FaEyeSlash />}
+                            </Button>
+                        ),
+                    }}
+                    InputLabelProps={{ style: { padding: "10px" } }}
                     required
                 />
-                {errors.re_password && (
-                    <span>{errors.re_password.message}</span>
-                )}
                 <StyledButton
                     type="submit"
                     sx={{ width: "fit-content", marginTop: "20px" }}
                 >
                     Submit
                 </StyledButton>
-                <Box
-                    sx={{
-                        cursor: "pointer",
-                        padding: "10px",
-                    }}
-                    onClick={() => navigate("/login")}
-                >
+                <AccountMessage onClick={() => navigate("/login")}>
                     Already a registered user?
-                </Box>
+                </AccountMessage>
             </StyledForm>
         </StyledBox>
     );

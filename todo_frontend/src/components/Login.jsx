@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axiosInstance from "../interceptor/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import {
+    AccountMessage,
     StyledBox,
     StyledButton,
     StyledForm,
@@ -64,12 +65,9 @@ const Login = ({ setToken }) => {
                 >
                     Submit
                 </StyledButton>
-                <Box
-                    sx={{ cursor: "pointer", padding: "10px" }}
-                    onClick={() => navigate("/register")}
-                >
+                <AccountMessage onClick={() => navigate("/register")}>
                     New to ToDoList?
-                </Box>
+                </AccountMessage>
             </StyledForm>
         </StyledBox>
     );

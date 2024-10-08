@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { FaRegCircle, FaRegCircleCheck } from "react-icons/fa6";
 import axiosInstance from "../interceptor/axiosInstance";
-import { StyledIcons, StyledTextarea } from "./styles/StyledComponents";
+import {
+    StyledIcons,
+    StyledTextarea,
+    TaskTitle,
+} from "./styles/StyledComponents";
 import { StyledBox } from "./styles/StyledComponents";
-// import Textarea from "@mui/joy/Textarea";
 
 const TaskUD = ({ tasks, setTasks }) => {
     const [taskEdits, setTaskEdits] = useState(() => {
         return JSON.parse(localStorage.getItem("taskEdits")) || {};
     });
+    const [editIds, setEditIds] = useState(null);
     const [clickedDeleteIds, setClickedDeleteIds] = useState([]);
     const [deleteTimeoutIds, setDeleteTimeoutIds] = useState({});
 
@@ -92,16 +96,35 @@ const TaskUD = ({ tasks, setTasks }) => {
             {tasks.map((task) => (
                 <StyledBox key={task.id}>
                     {/* Task title */}
-                    <StyledTextarea
-                        className="task-title"
-                        value={taskEdits[task.id] || task.title} // title from localstorage or from backend
-                        onChange={(e) => {
-                            handleTaskEdits(e, task);
-                        }}
-                        onKeyDown={(e) => e.key === "Enter" && updateTask(task)}
-                        onBlur={() => updateTask(task)}
-                        maxLength={100}
-                    />
+                    {editIds === task.id ? (
+                        <StyledTextarea
+                            value={taskEdits[task.id] || task.title} // title from localstorage or from backend
+                            onChange={(e) => {
+                                handleTaskEdits(e, task);
+                            }}
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                    setEditIds(null);
+                                    updateTask(task);
+                                }
+                            }}
+                            onBlur={() => {
+                                setEditIds(null);
+                                updateTask(task);
+                            }}
+                            multiline
+                            variant="standard"
+                            inputProps={{
+                                maxLength: 100,
+                                style: { fontSize: "1.5rem" },
+                            }}
+                        />
+                    ) : (
+                        <TaskTitle onClick={() => setEditIds(task.id)}>
+                            {task.title}
+                        </TaskTitle>
+                    )}
+
                     {/* <Textarea value={taskEdits[task.id] || task.title} /> */}
 
                     {/* Delete button */}

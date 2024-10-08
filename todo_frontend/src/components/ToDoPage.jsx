@@ -4,7 +4,7 @@ import axiosInstance from "../interceptor/axiosInstance";
 import TaskUD from "./TaskUD";
 import TaskAdd from "./TaskAdd";
 import Box from "@mui/joy/Box";
-import { StyledBox } from "./styles/StyledComponents";
+import { StyledBox, StyledIcons } from "./styles/StyledComponents";
 
 const ToDoPage = () => {
     const [tasks, setTasks] = useState([]);
@@ -31,21 +31,22 @@ const ToDoPage = () => {
 
     return (
         <div className="todo-list">
+            {/* Error handling */}
             {error ? (
-                <div className="task-item">
-                    <span className="error-task">
+                <StyledBox>
+                    <Box sx={{ padding: "10px" }}>
                         Error loading tasks, try refreshing the browser
-                    </span>
-                    <span className="cross-icon">
+                    </Box>
+                    <StyledIcons sx={{ fontSize: "1.5rem" }}>
                         <FaCircleXmark />
-                    </span>
-                </div>
+                    </StyledIcons>
+                </StyledBox>
             ) : tasks.length > 0 ? (
-                <div>
-                    <TaskUD tasks={tasks} setTasks={setTasks} />
-                </div>
+                // Display Tasks if tasks are fetched
+                <TaskUD tasks={tasks} setTasks={setTasks} />
             ) : (
                 <StyledBox>
+                    {/* If no task is created */}
                     <Box sx={{ padding: "10px" }}>
                         No task created, add one now
                     </Box>

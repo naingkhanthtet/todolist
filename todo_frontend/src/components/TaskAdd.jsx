@@ -43,16 +43,14 @@ const TaskAdd = ({ handleAddTask }) => {
                 onChange={(e) => setNewTaskTitle(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && addTask()}
                 placeholder="Add new task here"
-                maxLength={100}
+                variant="standard"
+                multiline
+                inputProps={{ maxLength: 100, style: { fontSize: "1.5rem" } }}
             />
-            {/* <Textarea value={newTaskTitle} /> */}
             {/* Add button */}
             <StyledIcons onClick={addTask} sx={{ fontSize: "1.5rem" }}>
                 <FaPlus />
             </StyledIcons>
-            {/* <span className="add-icon" onClick={addTask}>
-                <FaPlus />
-            </span> */}
         </StyledBox>
     );
 };
