@@ -1,7 +1,7 @@
 // import { TextareaAutosize } from "@mui/base";
 // import Textarea from "@mui/joy/Textarea";
 import { Toolbar, Typography, Box, Input, TextField } from "@mui/material";
-import { style, styled } from "@mui/system";
+import { styled } from "@mui/system";
 
 export const StyledTextarea = styled(TextField)(({ theme }) => ({
     backgroundColor: theme.palette.background.paper,

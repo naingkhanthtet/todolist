@@ -3,13 +3,12 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import axiosInstance from "../interceptor/axiosInstance";
 import { useNavigate } from "react-router-dom";
-import { Box, Button } from "@mui/material";
+import { Button } from "@mui/material";
 import {
     AccountMessage,
     StyledBox,
     StyledButton,
     StyledForm,
-    StyledInput,
 } from "./styles/StyledComponents";
 import { validationSchema } from "./validationSchema";
 import { StyledTextarea } from "./styles/StyledComponents";
