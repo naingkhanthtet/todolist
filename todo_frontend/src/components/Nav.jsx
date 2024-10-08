@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import "./styles/Nav.css";
 import { IoMenuSharp } from "react-icons/io5";
 import { useLocation } from "react-router-dom";
 import Logout from "./Logout";
@@ -8,8 +7,11 @@ import {
     DropdownComponent,
     NavText,
     StyledBox,
+    StyledButton,
     StyledIcons,
 } from "./styles/StyledComponents";
+import { MdOutlineLightMode, MdOutlineDarkMode } from "react-icons/md";
+
 export default function Nav({ toggleTheme, isDarkMode }) {
     const [dropDown, setDropdown] = useState(false);
     const location = useLocation();
@@ -36,7 +38,7 @@ export default function Nav({ toggleTheme, isDarkMode }) {
         <StyledBox>
             <NavText>{navTitle}</NavText>
 
-            {showMenu && (
+            {showMenu ? (
                 <StyledIcons onClick={toggleMenu} sx={{ fontSize: "3rem" }}>
                     <IoMenuSharp
                         className="nav-menu-icon"
@@ -54,6 +56,14 @@ export default function Nav({ toggleTheme, isDarkMode }) {
                         </DropdownComponent>
                     )}
                 </StyledIcons>
+            ) : (
+                <StyledButton onClick={toggleTheme}>
+                    {isDarkMode ? (
+                        <MdOutlineLightMode />
+                    ) : (
+                        <MdOutlineDarkMode />
+                    )}
+                </StyledButton>
             )}
         </StyledBox>
     );

@@ -6,15 +6,17 @@ import {
     StyledBox,
     StyledButton,
     StyledForm,
-    StyledInput,
+    StyledTextarea,
 } from "./styles/StyledComponents";
-import { Box } from "@mui/system";
+import { Button } from "@mui/material";
+import { FaEye, FaEyeSlash } from "react-icons/fa6";
 
 const Login = ({ setToken }) => {
     const [formData, setFormData] = useState({
         username: "",
         password: "",
     });
+    const [showPassword, setShowPassword] = React.useState(false);
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -45,18 +47,39 @@ const Login = ({ setToken }) => {
     return (
         <StyledBox>
             <StyledForm component="form" onSubmit={handleSubmit}>
-                <StyledInput
+                {/* login username */}
+                <StyledTextarea
                     type="text"
                     name="username"
                     onChange={handleChange}
-                    placeholder="Your username"
+                    placeholder="Your Username"
+                    label="Your Username"
+                    variant="standard"
+                    InputProps={{
+                        style: { fontSize: "1.5rem" },
+                    }}
+                    InputLabelProps={{ style: { padding: "10px" } }}
                     required
                 />
-                <StyledInput
-                    type="password"
+                {/* login password */}
+                <StyledTextarea
+                    type={showPassword ? "text" : "password"}
                     name="password"
                     onChange={handleChange}
-                    placeholder="Your secure password"
+                    placeholder="Your Password"
+                    label="Your Password"
+                    variant="standard"
+                    InputProps={{
+                        style: { fontSize: "1.5rem" },
+                        endAdornment: (
+                            <Button
+                                onClick={() => setShowPassword(!showPassword)}
+                            >
+                                {showPassword ? <FaEye /> : <FaEyeSlash />}
+                            </Button>
+                        ),
+                    }}
+                    InputLabelProps={{ style: { padding: "10px" } }}
                     required
                 />
                 <StyledButton
