@@ -17,7 +17,7 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from tasks.views import index, LogOutView, DeleteUser
+from tasks.views import index, LogOutView, DeleteUser, UserView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
@@ -30,4 +30,5 @@ urlpatterns = [
     path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("logout/", LogOutView.as_view(), name="logout"),
     path("user/delete/<int:pk>/", DeleteUser.as_view(), name="delete-user"),
+    path("user/", UserView.as_view(), name="user"),
 ]

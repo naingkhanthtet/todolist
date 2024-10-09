@@ -4,9 +4,10 @@ from rest_framework.generics import (
     ListCreateAPIView,
     RetrieveUpdateAPIView,
     DestroyAPIView,
+    RetrieveAPIView,
 )
 from .models import Task
-from .serializers import TaskSerializer
+from .serializers import TaskSerializer, UserSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -77,3 +78,13 @@ class DeleteUser(DestroyAPIView):
                 {"detail": "You do not have permission to delete this user."},
                 status=status.HTTP_403_FORBIDDEN,
             )
+
+
+class UserView(RetrieveAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = UserSerializer
+
+    def get(self, request, *args, **kwargs):
+        user = request.user
+        serializer = self.get_serializer(user)
+        return Response(serializer.data)
