@@ -56,9 +56,6 @@ const Register = () => {
                     variant="standard"
                     error={!!errors.username}
                     helperText={errors.username?.message}
-                    inputProps={{
-                        style: { fontSize: "1.5rem" },
-                    }}
                     InputLabelProps={{
                         style: { padding: "10px" },
                     }}
@@ -73,9 +70,6 @@ const Register = () => {
                     variant="standard"
                     error={!!errors.email}
                     helperText={errors.email?.message}
-                    inputProps={{
-                        style: { fontSize: "1.5rem" },
-                    }}
                     InputLabelProps={{ style: { padding: "10px" } }}
                     required
                 />
@@ -89,7 +83,6 @@ const Register = () => {
                     error={!!errors.password}
                     helperText={errors.password?.message}
                     InputProps={{
-                        style: { fontSize: "1.5rem" },
                         endAdornment: (
                             <Button
                                 onClick={() => setShowPassword(!showPassword)}
@@ -111,7 +104,6 @@ const Register = () => {
                     error={!!errors.re_password}
                     helperText={errors.re_password?.message}
                     InputProps={{
-                        style: { fontSize: "1.5rem" },
                         endAdornment: (
                             <Button
                                 onClick={() =>

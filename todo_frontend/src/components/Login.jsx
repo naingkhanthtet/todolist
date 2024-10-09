@@ -55,9 +55,6 @@ const Login = ({ setToken }) => {
                     placeholder="Your Username"
                     label="Your Username"
                     variant="standard"
-                    InputProps={{
-                        style: { fontSize: "1.5rem" },
-                    }}
                     InputLabelProps={{ style: { padding: "10px" } }}
                     required
                 />
@@ -70,7 +67,6 @@ const Login = ({ setToken }) => {
                     label="Your Password"
                     variant="standard"
                     InputProps={{
-                        style: { fontSize: "1.5rem" },
                         endAdornment: (
                             <Button
                                 onClick={() => setShowPassword(!showPassword)}

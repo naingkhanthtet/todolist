@@ -1,20 +1,24 @@
-import { useState, useEffect } from "react";
-import { createTheme } from "@mui/material/styles";
+import { createContext, useContext, useState, useEffect } from "react";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
 
-const useTheme = () => {
+const ThemeContext = createContext();
+
+export const ThemeContextProvider = ({ children }) => {
     const [isDarkMode, setIsDarkMode] = useState(
         localStorage.getItem("theme") === "dark"
     );
 
+    // Toggle theme between dark and light
     const toggleTheme = () => {
-        const newTheme = !isDarkMode ? "dark" : "light";
+        const newTheme = isDarkMode ? "light" : "dark";
         setIsDarkMode(!isDarkMode);
         localStorage.setItem("theme", newTheme);
     };
 
     const theme = createTheme({
         typography: {
-            fontFamily: "Lora, Arial, sans-serif",
+            fontFamily: "Lora, sans-serif",
         },
         palette: {
             mode: isDarkMode ? "dark" : "light",
@@ -39,7 +43,14 @@ const useTheme = () => {
         localStorage.setItem("theme", isDarkMode ? "dark" : "light");
     }, [isDarkMode]);
 
-    return { isDarkMode, toggleTheme, theme };
+    return (
+        <ThemeContext.Provider value={{ isDarkMode, toggleTheme }}>
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
+                {children}
+            </ThemeProvider>
+        </ThemeContext.Provider>
+    );
 };
 
-export default useTheme;
+export const useThemeContext = () => useContext(ThemeContext);

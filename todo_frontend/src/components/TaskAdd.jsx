@@ -45,7 +45,7 @@ const TaskAdd = ({ handleAddTask }) => {
                 placeholder="Add new task here"
                 variant="standard"
                 multiline
-                inputProps={{ maxLength: 100, style: { fontSize: "1.5rem" } }}
+                inputProps={{ maxLength: 100 }}
             />
             {/* Add button */}
             <StyledIcons onClick={addTask} sx={{ fontSize: "1.5rem" }}>

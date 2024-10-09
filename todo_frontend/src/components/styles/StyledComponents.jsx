@@ -1,4 +1,4 @@
-import { Toolbar, Typography, Box, TextField } from "@mui/material";
+import { Toolbar, Typography, Box, TextField, Dialog } from "@mui/material";
 import { styled } from "@mui/system";
 
 export const NavText = styled(Typography)({
@@ -31,13 +31,11 @@ export const StyledTextarea = styled(TextField)(({ theme }) => ({
     resize: "none",
     textAlign: "left",
     fontFamily: "Lora",
-    fontSize: "1.5rem",
     padding: "10px",
 }));
 
 export const TaskTitle = styled(Box)({
     padding: "10px",
-    fontSize: "1.5rem",
 });
 
 export const StyledBox = styled(Toolbar)({
@@ -68,9 +66,9 @@ export const StyledButton = styled(Box)(({ theme }) => ({
     outline: "none",
     color: theme.palette.text.primary,
     backgroundColor: "transparent",
-    fontSize: "1.5rem",
     padding: "10px",
     fontFamily: "Lora",
+    fontSize: "1rem",
     border: "none",
     textAlign: "center",
     cursor: "pointer",

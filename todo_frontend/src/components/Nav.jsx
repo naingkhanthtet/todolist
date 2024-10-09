@@ -1,21 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { IoMenuSharp } from "react-icons/io5";
+import React from "react";
 import { useLocation } from "react-router-dom";
-import Logout from "./Logout";
-import Theme from "./Theme";
-import {
-    DropdownComponent,
-    NavText,
-    StyledBox,
-    StyledButton,
-    StyledIcons,
-} from "./styles/StyledComponents";
-import { MdOutlineLightMode, MdOutlineDarkMode } from "react-icons/md";
-import DeleteUser from "./DeleteUser";
+import { NavText, StyledBox, StyledIcons } from "./styles/StyledComponents";
+import { MdOutlineLightMode, MdOutlineDarkMode, MdHome } from "react-icons/md";
+import { MdSettings } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+import { useThemeContext } from "../ThemeContextProvider";
 
-export default function Nav({ toggleTheme, isDarkMode }) {
-    const [dropDown, setDropdown] = useState(false);
+export default function Nav() {
+    const { isDarkMode, toggleTheme } = useThemeContext();
     const location = useLocation();
+    const navigate = useNavigate();
     let navTitle = "ToDoList";
 
     if (location.pathname === "/register") {
@@ -23,49 +17,37 @@ export default function Nav({ toggleTheme, isDarkMode }) {
     } else if (location.pathname === "/login") {
         navTitle = "Login ToDoList";
     }
-
-    const showMenu =
+    const showSettings =
         location.pathname !== "/register" && location.pathname !== "/login";
 
-    const toggleMenu = () => {
-        setDropdown(!dropDown);
+    const navigateSettings = () => {
+        navigate("/settings");
     };
 
-    useEffect(() => {
-        setDropdown(false);
-    }, [location]);
+    const navigateHome = () => {
+        navigate("/home");
+    };
 
     return (
         <StyledBox>
             <NavText>{navTitle}</NavText>
 
-            {showMenu ? (
-                <StyledIcons onClick={toggleMenu} sx={{ fontSize: "3rem" }}>
-                    <IoMenuSharp
-                        className="nav-menu-icon"
-                        style={{ opacity: dropDown ? 0.5 : 1 }}
-                        onBlur={() => setDropdown(false)}
-                    />
-
-                    {dropDown && (
-                        <DropdownComponent>
-                            <Logout />
-                            <Theme
-                                toggleTheme={toggleTheme}
-                                isDarkMode={isDarkMode}
-                            />
-                            <DeleteUser />
-                        </DropdownComponent>
+            {showSettings ? (
+                <StyledIcons sx={{ fontSize: "3rem" }}>
+                    {location.pathname === "/home" ? (
+                        <MdSettings onClick={navigateSettings} />
+                    ) : (
+                        <MdHome onClick={navigateHome} />
                     )}
                 </StyledIcons>
             ) : (
-                <StyledButton onClick={toggleTheme}>
+                <StyledIcons onClick={toggleTheme} sx={{ fontSize: "1.5rem" }}>
                     {isDarkMode ? (
                         <MdOutlineLightMode />
                     ) : (
                         <MdOutlineDarkMode />
                     )}
-                </StyledButton>
+                </StyledIcons>
             )}
         </StyledBox>
     );
