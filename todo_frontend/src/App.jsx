@@ -13,6 +13,8 @@ import useTheme from "./useTheme";
 import useToken from "./useToken";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import Footer from "./components/Footer";
+// import { AppContainer } from "./components/styles/StyledComponents";
 
 function App() {
     const { isDarkMode, toggleTheme, theme } = useTheme();
@@ -22,6 +24,7 @@ function App() {
             <Router>
                 <ThemeProvider theme={theme}>
                     <CssBaseline />
+                    {/* <AppContainer> */}
                     <Nav toggleTheme={toggleTheme} isDarkMode={isDarkMode} />
                     <Routes>
                         <Route path="/register" element={<Register />} />
@@ -43,6 +46,8 @@ function App() {
                         />
                         <Route path="/logout" element={<Logout />} />
                     </Routes>
+                    <Footer />
+                    {/* </AppContainer> */}
                 </ThemeProvider>
             </Router>
         </div>

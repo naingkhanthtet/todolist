@@ -11,6 +11,7 @@ import {
     StyledIcons,
 } from "./styles/StyledComponents";
 import { MdOutlineLightMode, MdOutlineDarkMode } from "react-icons/md";
+import DeleteUser from "./DeleteUser";
 
 export default function Nav({ toggleTheme, isDarkMode }) {
     const [dropDown, setDropdown] = useState(false);
@@ -53,6 +54,7 @@ export default function Nav({ toggleTheme, isDarkMode }) {
                                 toggleTheme={toggleTheme}
                                 isDarkMode={isDarkMode}
                             />
+                            <DeleteUser />
                         </DropdownComponent>
                     )}
                 </StyledIcons>

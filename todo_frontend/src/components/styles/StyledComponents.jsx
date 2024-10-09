@@ -1,44 +1,11 @@
-// import { TextareaAutosize } from "@mui/base";
-// import Textarea from "@mui/joy/Textarea";
-import { Toolbar, Typography, Box, Input, TextField } from "@mui/material";
+import { Toolbar, Typography, Box, TextField } from "@mui/material";
 import { styled } from "@mui/system";
-
-export const StyledTextarea = styled(TextField)(({ theme }) => ({
-    backgroundColor: theme.palette.background.paper,
-    color: theme.palette.text.primary,
-    resize: "none",
-    textAlign: "left",
-    fontFamily: "Lora",
-    fontSize: "1.5rem",
-    padding: "10px",
-}));
 
 export const NavText = styled(Typography)({
     fontSize: "3rem",
     textAlign: "left",
     gridColumn: 1,
     padding: "10px",
-});
-
-export const TaskTitle = styled(Box)({
-    padding: "10px",
-    fontSize: "1.5rem",
-});
-
-export const StyledBox = styled(Toolbar)({
-    maxWidth: "500px",
-    margin: "auto",
-    padding: "10px",
-    display: "grid",
-    gridTemplateColumns: "auto 50px",
-});
-
-export const StyledIcons = styled(Box)({
-    gridColumn: 2,
-    padding: "10px",
-    display: "flex",
-    justifyContent: "center",
-    cursor: "pointer",
 });
 
 export const DropdownComponent = styled(Box)(({ theme }) => ({
@@ -58,6 +25,45 @@ export const DropdownComponent = styled(Box)(({ theme }) => ({
     zIndex: "1000",
 }));
 
+export const StyledTextarea = styled(TextField)(({ theme }) => ({
+    backgroundColor: theme.palette.background.paper,
+    color: theme.palette.text.primary,
+    resize: "none",
+    textAlign: "left",
+    fontFamily: "Lora",
+    fontSize: "1.5rem",
+    padding: "10px",
+}));
+
+export const TaskTitle = styled(Box)({
+    padding: "10px",
+    fontSize: "1.5rem",
+});
+
+export const StyledBox = styled(Toolbar)({
+    maxWidth: "500px",
+    margin: "auto",
+    padding: "10px",
+    display: "grid",
+    gridTemplateColumns: "auto 50px",
+});
+
+export const StyledArea = styled(Toolbar)({
+    maxWidth: "500px",
+    margin: "auto",
+    padding: "10px",
+    display: "flex",
+    flexDirection: "column",
+});
+
+export const StyledIcons = styled(Box)({
+    gridColumn: 2,
+    padding: "10px",
+    display: "flex",
+    justifyContent: "center",
+    cursor: "pointer",
+});
+
 export const StyledButton = styled(Box)(({ theme }) => ({
     outline: "none",
     color: theme.palette.text.primary,
@@ -74,17 +80,6 @@ export const StyledButton = styled(Box)(({ theme }) => ({
     },
 })).withComponent("button");
 
-export const StyledInput = styled(Input)(({ theme }) => ({
-    color: theme.palette.text.primary,
-    backgroundColor: "transparent",
-    outline: "none",
-    border: "none",
-    fontSize: "1.5rem",
-    padding: "10px",
-    textAlign: "left",
-    fontFamily: "Lora",
-}));
-
 export const StyledForm = styled(Box)({
     display: "flex",
     flexDirection: "column",
@@ -96,7 +91,5 @@ export const StyledForm = styled(Box)({
 export const AccountMessage = styled(Box)({
     cursor: "pointer",
     padding: "10px",
-    ":hover": {
-        textDecoration: "underline",
-    },
+    textDecoration: "underline",
 });

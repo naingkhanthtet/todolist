@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import {
     AccountMessage,
-    StyledBox,
+    StyledArea,
     StyledButton,
     StyledForm,
 } from "./styles/StyledComponents";
@@ -45,7 +45,7 @@ const Register = () => {
     };
 
     return (
-        <StyledBox>
+        <StyledArea>
             <StyledForm component="form" onSubmit={handleSubmit(onSubmit)}>
                 {/* username */}
                 <StyledTextarea
@@ -135,7 +135,7 @@ const Register = () => {
                     Already a registered user?
                 </AccountMessage>
             </StyledForm>
-        </StyledBox>
+        </StyledArea>
     );
 };
 

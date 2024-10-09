@@ -3,7 +3,7 @@ import axiosInstance from "../interceptor/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import {
     AccountMessage,
-    StyledBox,
+    StyledArea,
     StyledButton,
     StyledForm,
     StyledTextarea,
@@ -45,7 +45,7 @@ const Login = ({ setToken }) => {
     };
 
     return (
-        <StyledBox>
+        <StyledArea>
             <StyledForm component="form" onSubmit={handleSubmit}>
                 {/* login username */}
                 <StyledTextarea
@@ -92,7 +92,7 @@ const Login = ({ setToken }) => {
                     New to ToDoList?
                 </AccountMessage>
             </StyledForm>
-        </StyledBox>
+        </StyledArea>
     );
 };
 
