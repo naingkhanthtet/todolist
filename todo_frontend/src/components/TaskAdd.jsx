@@ -7,7 +7,6 @@ import {
     StyledIcons,
     StyledTextarea,
 } from "./styles/StyledComponents";
-// import Textarea from "@mui/joy/Textarea";
 
 const TaskAdd = ({ handleAddTask }) => {
     const [newTaskTitle, setNewTaskTitle] = useState("");

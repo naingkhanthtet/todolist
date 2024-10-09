@@ -1,4 +1,4 @@
-import { Toolbar, Typography, Box, TextField, Dialog } from "@mui/material";
+import { Toolbar, Typography, Box, TextField } from "@mui/material";
 import { styled } from "@mui/system";
 
 export const NavText = styled(Typography)({
